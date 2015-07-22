@@ -14,14 +14,17 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 
 import com.google.gson.Gson;
 import com.oocl.kary.kk.model.KPacket;
+import com.oocl.kary.kk.model.LoginBody;
 import com.oocl.kary.kk.model.User;
 
+import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
@@ -154,8 +157,15 @@ public class LoginFrame extends JFrame {
 				out.println(json);
 				out.flush();
 				json = in.readLine();
-				System.out.println(json);
-
+				packet=gson.fromJson(json, packet.getClass());
+				LoginBody loginBody=gson.fromJson(packet.body.toString(), LoginBody.class);
+				if(loginBody.message.equals("success")){
+					JOptionPane.showMessageDialog(contentPane, "Login success.");
+					String token=in.readLine();
+					System.out.println(token);
+				}else{
+					JOptionPane.showMessageDialog(contentPane, "Wrong login id/password.", "Login Fail", JOptionPane.ERROR_MESSAGE);
+				}
 			} catch (UnknownHostException e1) {
 				e1.printStackTrace();
 			} catch (IOException e1) {
