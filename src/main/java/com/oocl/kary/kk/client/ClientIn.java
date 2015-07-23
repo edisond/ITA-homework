@@ -91,6 +91,22 @@ public class ClientIn implements Runnable {
 					sJframe.startShake();
 					break;
 				}
+				case "groupchat": {
+					Message message = new Message();
+					message.body = packet.body.toString();
+					message.from = packet.from.getId();
+					message.groupChat = true;
+					message.date = Calendar.getInstance();
+					frame.getMessages().add(message);
+					
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							frame.updateChatContainer();
+						}
+					});
+
+					break;
+				}
 				default:
 					break;
 				}

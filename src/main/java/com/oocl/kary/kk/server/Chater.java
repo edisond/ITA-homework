@@ -93,7 +93,8 @@ public class Chater implements Runnable {
 							KPacket brocastPacket = new KPacket("getuser");
 							brocastPacket.body = users;
 							for (String key : session.keySet()) {
-								//System.out.println("Login brocast to " + key);
+								// System.out.println("Login brocast to " +
+								// key);
 								new Thread(new ServerOut(session.get(key),
 										brocastPacket)).start();
 							}
@@ -110,8 +111,8 @@ public class Chater implements Runnable {
 							msg));
 					if (msg.equals("success")) {
 						resultPacket.token = socket.toString();
-						//System.out.println("Logined:\t" + socket.toString()
-						//		+ "\tOnline num: " + session.size());
+						System.out.println("Logined:\t" + socket.toString()
+								+ "\tOnline num: " + session.size());
 					}
 
 					/**
@@ -124,16 +125,12 @@ public class Chater implements Runnable {
 				case "getuser": {
 					KPacket resultPacket = new KPacket("getuser");
 					resultPacket.body = users;
-					//System.out.println("getuser to " + socket.toString());
 					new Thread(new ServerOut(socket, resultPacket)).start();
 					break;
 				}
 				case "chat": {
-					//System.out.println(json);
 					for (String key : session.keySet()) {
-						//System.out.println(key);
 						if (key.equals(packet.to[0].getId())) {
-							//System.out.println("match!" + key);
 							new Thread(new ServerOut(session.get(key), json))
 									.start();
 							break;
@@ -152,6 +149,16 @@ public class Chater implements Runnable {
 					}
 					break;
 				}
+				case "groupchat": {
+					for (User u : packet.to) {
+						if (session.containsKey(u.getId())
+								&& !session.get(u.getId()).equals(socket)) {
+							new Thread(new ServerOut(session.get(u.getId()),
+									json)).start();
+						}
+					}
+					break;
+				}
 				default:
 					break;
 				}
@@ -159,8 +166,6 @@ public class Chater implements Runnable {
 
 		} catch (SocketException e) {
 
-			
-			
 			System.out.println("Disconnected:\t" + socket.toString()
 					+ "\tOnline num: " + session.size());
 		} catch (Exception e) {
@@ -179,18 +184,18 @@ public class Chater implements Runnable {
 					}
 				}
 			}
-			
+
 			for (User u : users) {
 				if (u.getId().equals(userId)) {
 					u.setState("offline");
 					break;
 				}
 			}
-			
+
 			KPacket brocastPacket = new KPacket("getuser");
 			brocastPacket.body = users;
 			for (String key : session.keySet()) {
-				//System.out.println("Logout brocast to " + key);
+				// System.out.println("Logout brocast to " + key);
 				new Thread(new ServerOut(session.get(key), brocastPacket))
 						.start();
 			}

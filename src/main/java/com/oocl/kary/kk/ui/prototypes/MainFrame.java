@@ -21,6 +21,7 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ListModel;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -143,11 +144,22 @@ public class MainFrame extends JFrame {
 
 		contactList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
-				User targetUser = users.get(contactList.getSelectedIndex());
-				String targetUserName = targetUser.getUsername();
-				chatRecordTextArea.setBorder(new TitledBorder("chat with "
-						+ targetUserName));
-				updateChatContainer();
+				int selectedContactIndex = contactList.getSelectedIndex();
+				if (selectedContactIndex == -1) {
+					return;
+				} else if (selectedContactIndex == users.size()) {
+					chatRecordTextArea.setBorder(new TitledBorder(contactList
+							.getSelectedValue()));
+					updateChatContainer();
+					shakeButton.setVisible(false);
+				} else {
+					User targetUser = users.get(selectedContactIndex);
+					String targetUserName = targetUser.getUsername();
+					chatRecordTextArea.setBorder(new TitledBorder("chat with "
+							+ targetUserName));
+					updateChatContainer();
+					shakeButton.setVisible(true);
+				}
 			}
 		});
 
@@ -158,7 +170,7 @@ public class MainFrame extends JFrame {
 	 */
 	public void updateContactContainer() {
 
-		String[] list = new String[users.size()];
+		String[] list = new String[users.size() + 1];
 		for (int i = 0; i < users.size(); i++) {
 			if (users.get(i).getId().equals(id)) {
 				continue;
@@ -167,7 +179,7 @@ public class MainFrame extends JFrame {
 			list[i] = u.getUsername()
 					+ (u.getState().equals("online") ? "    ✓" : "");
 		}
-
+		list[list.length - 1] = "Group chat";
 		contactList.setListData(list);
 		contactList.updateUI();
 	}
@@ -257,17 +269,48 @@ public class MainFrame extends JFrame {
 	 */
 	public void doChat() {
 		String msg = inputTextArea.getText();
+		int selectedContactIndex = contactList.getSelectedIndex();
+
 		if (msg.equals("")) {
 			inputTextArea.grabFocus();
 		} else if (contactList.getSelectedIndex() == -1) {
 			JOptionPane.showMessageDialog(null, "Please select a contact.");
+		} else if (contactList.getSelectedIndex() == users.size()) {
+			/**
+			 * 群聊信息包
+			 */
+			KPacket packet = new KPacket("groupchat");
+			packet.from = new User(id);
+			packet.to = users.toArray(new User[0]);
+			packet.body = msg;
+			/**
+			 * 此对象供客户端刷新聊天框用
+			 */
+			Message msgObj = new Message();
+			msgObj.from = id;
+			msgObj.groupChat = true;
+			msgObj.body = msg;
+			msgObj.date = Calendar.getInstance();
+			messages.add(msgObj);
+
+			/**
+			 * 更新聊天框
+			 */
+			updateChatContainer();
+			inputTextArea.setText("");
+
+			/**
+			 * 发送消息包
+			 */
+			new Thread(new ClientOut(socket, packet)).start();
+
 		} else {
 			/**
 			 * 封装信息包
 			 */
 			KPacket packet = new KPacket("chat");
 			packet.from = new User(id);
-			packet.to = new User[] { users.get(contactList.getSelectedIndex()) };
+			packet.to = new User[] { users.get(selectedContactIndex) };
 			packet.body = msg;
 
 			/**
@@ -300,20 +343,42 @@ public class MainFrame extends JFrame {
 	public void updateChatContainer() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
-		if (contactList.getSelectedIndex() == -1) {
+		int selectedContactIndex = contactList.getSelectedIndex();
+
+		if (selectedContactIndex == -1) {
 			return;
-		} else {
-			User targetUser = users.get(contactList.getSelectedIndex());
+		} else if (selectedContactIndex == users.size()) {
 			String str = "";
 			for (Message msg : messages) {
-				if (msg.from.equals(id) && msg.to.equals(targetUser.getId())) {
+				if (msg.from.equals(id) && msg.groupChat) {
 					str += "me ";
 					str += sdf.format(msg.date.getTime());
 					str += "\r\n";
 					str += msg.body;
 					str += "\r\n\r\n";
-				} else if (msg.to.equals(id)
-						&& msg.from.equals(targetUser.getId())) {
+				} else if (msg.groupChat) {
+					str += msg.from + " ";
+					str += sdf.format(msg.date.getTime());
+					str += "\r\n";
+					str += msg.body;
+					str += "\r\n\r\n";
+				}
+			}
+			chatRecordTextArea.setText(str);
+		} else {
+			User targetUser = users.get(selectedContactIndex);
+			String str = "";
+			for (Message msg : messages) {
+				if (!msg.groupChat && msg.to.equals(targetUser.getId())
+						&& msg.from.equals(id)) {
+					str += "me ";
+					str += sdf.format(msg.date.getTime());
+					str += "\r\n";
+					str += msg.body;
+					str += "\r\n\r\n";
+				} else if (!msg.groupChat
+						&& msg.from.equals(targetUser.getId())
+						&& msg.to.equals(id)) {
 					str += targetUser.getUsername() + " ";
 					str += sdf.format(msg.date.getTime());
 					str += "\r\n";
