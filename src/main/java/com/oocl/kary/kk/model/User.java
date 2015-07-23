@@ -2,7 +2,7 @@ package com.oocl.kary.kk.model;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+public class User implements Serializable {
 	/**
 	 * 
 	 */
@@ -44,4 +44,22 @@ public class User implements Serializable{
 		this.state = state;
 	}
 
+	public User() {
+
+	}
+
+	public User(String id) {
+		this.id = id;
+	}
+
+	public User(String id, String username) {
+		this.id = id;
+		this.username = username;
+	}
+
+	public User(String id, String username, String password) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
 }

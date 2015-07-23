@@ -5,7 +5,15 @@ public class KPacket {
 	public User from;
 	public User[] to;
 	public Object body;
+	public String token;
 
+	public KPacket() {
+
+	}
+
+	public KPacket(String type) {
+		this.type = type;
+	}
 
 	public KPacket(String type, User user) {
 		if (type.equals("login")) {
@@ -21,5 +29,3 @@ public class KPacket {
 		}
 	}
 }
-
-

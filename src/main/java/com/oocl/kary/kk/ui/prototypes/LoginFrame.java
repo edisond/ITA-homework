@@ -3,6 +3,7 @@ package com.oocl.kary.kk.ui.prototypes;
 import java.awt.Cursor;
 import java.awt.EventQueue;
 
+import javax.lang.model.type.PrimitiveType;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -24,9 +25,10 @@ import com.oocl.kary.kk.model.KPacket;
 import com.oocl.kary.kk.model.LoginBody;
 import com.oocl.kary.kk.model.User;
 
-import java.awt.TrayIcon.MessageType;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,10 +39,19 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Properties;
 
+/**
+ * 登陆窗体
+ * 
+ * @author edisond@qq.com
+ * 
+ */
 public class LoginFrame extends JFrame {
 
+	private Socket socket;
+	private PrintWriter out;
+	private BufferedReader in;
 	/**
-	 * 
+	 * 控件
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -50,23 +61,72 @@ public class LoginFrame extends JFrame {
 	private Properties config;
 
 	/**
-	 * Launch the application.
+	 * 执行登陆
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					LoginFrame frame = new LoginFrame();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
+	public void doLogin() {
+		String id = textField.getText();
+		String password = new String(passwordField.getPassword());
+
+		/**
+		 * 判断输入合法
+		 */
+		if (id.equals("")) {
+			textField.grabFocus();
+		} else if (password.equals("")) {
+			passwordField.grabFocus();
+		} else {
+			try {
+				/**
+				 * 包装登陆请求包并发送
+				 */
+				User user = new User();
+				user.setId(id);
+				user.setPassword(password);
+				KPacket packet = new KPacket("login", user);
+				Gson gson = new Gson();
+				String json = gson.toJson(packet, packet.getClass());
+
+				out.println(json);
+				out.flush();
+
+				/**
+				 * 等待服务器响应
+				 */
+				json = in.readLine();
+				
+				/**
+				 * 拆包
+				 */
+				//System.out.println(json);
+				packet = gson.fromJson(json, packet.getClass());
+				LoginBody loginBody = gson.fromJson(packet.body.toString(),
+						LoginBody.class);
+
+				if (loginBody.message.equals("success")) {
+					/**
+					 * 验证成功
+					 */
+					setVisible(false);
+					MainFrame mainFrame = new MainFrame(user.getId(),
+							packet.token, socket);
+				} else {
+					/**
+					 * 验证失败
+					 */
+					JOptionPane.showMessageDialog(contentPane,
+							"Wrong login id/password.", "Login Fail",
+							JOptionPane.ERROR_MESSAGE);
 				}
+			} catch (UnknownHostException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
 			}
-		});
+		}
 	}
 
 	/**
-	 * Create the frame.
+	 * 构建方法
 	 * 
 	 * @throws IOException
 	 * @throws FileNotFoundException
@@ -74,6 +134,15 @@ public class LoginFrame extends JFrame {
 	public LoginFrame() throws FileNotFoundException, IOException {
 		config = new Properties();
 		config.load(new FileInputStream("config.ini"));
+
+		/**
+		 * 初始化Socket及读写流
+		 */
+		socket = new Socket(config.getProperty("host"), Integer.parseInt(config
+				.getProperty("port")));
+
+		out = new PrintWriter(socket.getOutputStream());
+		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
 		setBackground(Color.WHITE);
 		setAlwaysOnTop(true);
@@ -129,56 +198,32 @@ public class LoginFrame extends JFrame {
 			}
 		});
 		getRootPane().setDefaultButton(btnNewButton);
+
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				super.windowClosing(e);
+				// try {
+				// socket.close();
+				// } catch (IOException e1) {
+				// e1.printStackTrace();
+				// }
+			}
+		});
 	}
 
-	public void doLogin() {
-		String id = textField.getText();
-		String password = new String(passwordField.getPassword());
-		if (id.equals("")) {
-			textField.grabFocus();
-		} else if (password.equals("")) {
-			passwordField.grabFocus();
-		} else {
-			Socket socket = null;
-			PrintWriter out = null;
-			BufferedReader in = null;
-			try {
-				socket = new Socket(config.getProperty("host"),
-						Integer.parseInt(config.getProperty("port")));
-				out = new PrintWriter(socket.getOutputStream());
-				in = new BufferedReader(new InputStreamReader(
-						socket.getInputStream()));
-				User user = new User();
-				user.setId(id);
-				user.setPassword(password);
-				KPacket packet = new KPacket("login", user);
-				Gson gson = new Gson();
-				String json = gson.toJson(packet, packet.getClass());
-				out.println(json);
-				out.flush();
-				json = in.readLine();
-				packet=gson.fromJson(json, packet.getClass());
-				LoginBody loginBody=gson.fromJson(packet.body.toString(), LoginBody.class);
-				if(loginBody.message.equals("success")){
-					JOptionPane.showMessageDialog(contentPane, "Login success.");
-					String token=in.readLine();
-					System.out.println(token);
-				}else{
-					JOptionPane.showMessageDialog(contentPane, "Wrong login id/password.", "Login Fail", JOptionPane.ERROR_MESSAGE);
-				}
-			} catch (UnknownHostException e1) {
-				e1.printStackTrace();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			} finally {
+	/**
+	 * 测试用Main方法
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
 				try {
-					out.close();
-					in.close();
-					socket.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
+					LoginFrame frame = new LoginFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
 			}
-		}
+		});
 	}
 }
