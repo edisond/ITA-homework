@@ -7,15 +7,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import com.google.gson.Gson;
-import com.oocl.kary.kk.server.model.KPacket;
+import com.oocl.kary.kk.server.model.Packet;
 
 public class Request implements Runnable {
 
 	private Socket socket;
-	private KPacket packet;
+	private Packet packet;
 	private String json;
 
-	public Request(Socket socket, KPacket packet) {
+	public Request(Socket socket, Packet packet) {
 		this.socket = socket;
 		this.packet = packet;
 		if (packet.stamp == null) {

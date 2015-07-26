@@ -1,24 +1,31 @@
 package com.oocl.kary.kk.client.ui;
 
 import java.awt.Cursor;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.MatteBorder;
+
 import java.awt.Color;
+
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
+
 import com.google.gson.Gson;
-import com.oocl.kary.kk.client.model.KPacket;
+import com.oocl.kary.kk.client.Client;
+import com.oocl.kary.kk.client.model.Packet;
 import com.oocl.kary.kk.client.model.User;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -70,7 +77,7 @@ public class LoginFrame extends JFrame {
 				User user = new User();
 				user.setId(id);
 				user.setPassword(password);
-				KPacket packet = new KPacket("login", user);
+				Packet packet = new Packet("login", user);
 				Gson gson = new Gson();
 				String json = gson.toJson(packet, packet.getClass());
 
@@ -88,8 +95,8 @@ public class LoginFrame extends JFrame {
 				System.out.println(json);
 				
 				packet = gson.fromJson(json, packet.getClass());
-				KPacket.LoginBody loginBody = gson.fromJson(
-						packet.body.toString(), KPacket.LoginBody.class);
+				Packet.LoginBody loginBody = gson.fromJson(
+						packet.body.toString(), Packet.LoginBody.class);
 
 				if (loginBody.message.equals("success")) {
 					/**
@@ -123,7 +130,7 @@ public class LoginFrame extends JFrame {
 	 */
 	public LoginFrame() throws FileNotFoundException, IOException {
 		config = new Properties();
-		config.load(new FileInputStream("config.ini"));
+		config.load(Client.class.getResourceAsStream("config.ini"));
 
 		/**
 		 * 初始化Socket及读写流

@@ -23,8 +23,7 @@ import javax.swing.Timer;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
-import com.oocl.kary.kk.client.model.KPacket;
+import com.oocl.kary.kk.client.model.Packet;
 import com.oocl.kary.kk.client.model.User;
 import com.oocl.kary.kk.client.service.Response;
 import com.oocl.kary.kk.client.service.Request;
@@ -91,7 +90,7 @@ public class MainFrame extends JFrame implements Shakable {
 	/**
 	 * 已发送或接受到的聊天消息包
 	 */
-	private List<KPacket> msgPackets;
+	private List<Packet> msgPackets;
 
 	/**
 	 * 协议包时间戳格式
@@ -131,11 +130,11 @@ public class MainFrame extends JFrame implements Shakable {
 		return users;
 	}
 
-	public List<KPacket> getMsgPackets() {
+	public List<Packet> getMsgPackets() {
 		return msgPackets;
 	}
 
-	public void setMsgPackets(List<KPacket> msgPackets) {
+	public void setMsgPackets(List<Packet> msgPackets) {
 		this.msgPackets = msgPackets;
 	}
 
@@ -152,7 +151,7 @@ public class MainFrame extends JFrame implements Shakable {
 		this.id = id;
 		this.token = token;
 		this.socket = socket;
-		msgPackets = new LinkedList<KPacket>();
+		msgPackets = new LinkedList<Packet>();
 
 		/**
 		 * 启动永动监听器
@@ -162,7 +161,7 @@ public class MainFrame extends JFrame implements Shakable {
 		/**
 		 * 发送getuser包，请求刷新用户列表
 		 */
-		KPacket packet = new KPacket("getuser");
+		Packet packet = new Packet("getuser");
 		new Thread(new Request(socket, packet)).start();
 
 		/**
@@ -206,6 +205,7 @@ public class MainFrame extends JFrame implements Shakable {
 					updateChatContainer();
 					shakeButton.setVisible(true);
 				}
+
 			}
 		});
 
@@ -216,6 +216,8 @@ public class MainFrame extends JFrame implements Shakable {
 	 */
 	public void updateContactContainer() {
 
+		int selectedIndex = contactList.getSelectedIndex();
+
 		String[] list = new String[users.size() + 1];
 		for (int i = 0; i < users.size(); i++) {
 			if (users.get(i).getId().equals(id)) {
@@ -225,25 +227,30 @@ public class MainFrame extends JFrame implements Shakable {
 
 			list[i] = "<html>";
 
-			list[i] += u.getState().equals("online") ? "<img src='file:online.png'>"
-					: "<img src='file:offline.png'>";
+			/*
+			 * list[i] += u.getState().equals("online") ?
+			 * "<img src='file:online.png'>" : "<img src='file:offline.png'>";
+			 */
 
+			list[i] += "<font color='"
+					+ (u.getState().equals("online") ? "black" : "gray") + "'>";
 			list[i] += u.getUsername();
-
+			list[i] += "</font>";
+			/*
+			 * for (Packet msg : msgPackets) { if (!msg.read &&
+			 * msg.from.getId().equals(u.getId())) { list[i] += "     [new]";
+			 * break; } }
+			 */
 			list[i] += "</html>";
-
-			// for (KPacket p : msgPackets) {
-			// if (p.read == false && p.from.getId().equals(u.getId())) {
-			// list[i] += "    [new]";
-			// break;
-			// }
-			// }
 
 		}
 		list[list.length - 1] = "Group chat";
 
 		contactList.setListData(list);
 		contactList.updateUI();
+
+		contactList.setSelectedIndex(selectedIndex);
+
 	}
 
 	/**
@@ -315,7 +322,7 @@ public class MainFrame extends JFrame implements Shakable {
 			return;
 		} else if (selectedContactIndex == users.size()) {
 			String str = "";
-			for (KPacket msg : msgPackets) {
+			for (Packet msg : msgPackets) {
 				if (msg.from.getId().equals(id) && msg.type.equals("groupchat")) {
 					str += "me ";
 					str += msg.stamp;
@@ -340,7 +347,7 @@ public class MainFrame extends JFrame implements Shakable {
 		} else {
 			User targetUser = users.get(selectedContactIndex);
 			String str = "";
-			for (KPacket msg : msgPackets) {
+			for (Packet msg : msgPackets) {
 				if (msg.type.equals("chat")
 						&& msg.to[0].getId().equals(targetUser.getId())
 						&& msg.from.getId().equals(id)) {
@@ -349,6 +356,7 @@ public class MainFrame extends JFrame implements Shakable {
 					str += "\r\n";
 					str += msg.body;
 					str += "\r\n\r\n";
+					msg.read = true;
 				} else if (msg.type.equals("chat")
 						&& msg.from.getId().equals(targetUser.getId())
 						&& msg.to[0].getId().equals(id)) {
@@ -357,11 +365,11 @@ public class MainFrame extends JFrame implements Shakable {
 					str += "\r\n";
 					str += msg.body;
 					str += "\r\n\r\n";
+					msg.read = true;
 				}
 			}
 			chatRecordTextArea.setText(str);
 		}
-
 	}
 
 	/**
@@ -388,7 +396,7 @@ public class MainFrame extends JFrame implements Shakable {
 			/**
 			 * 封装信息包
 			 */
-			KPacket packet = new KPacket("shake");
+			Packet packet = new Packet("shake");
 			packet.from = new User(id);
 			packet.to = new User[] { users.get(contactList.getSelectedIndex()) };
 
@@ -416,7 +424,7 @@ public class MainFrame extends JFrame implements Shakable {
 			/**
 			 * 群聊信息包
 			 */
-			KPacket packet = new KPacket("groupchat");
+			Packet packet = new Packet("groupchat");
 			packet.from = new User(id);
 			packet.to = users.toArray(new User[0]);
 			packet.body = msg;
@@ -440,7 +448,7 @@ public class MainFrame extends JFrame implements Shakable {
 			/**
 			 * 单聊信息包
 			 */
-			KPacket packet = new KPacket("chat");
+			Packet packet = new Packet("chat");
 			packet.from = new User(id);
 			packet.to = new User[] { users.get(selectedContactIndex) };
 			packet.body = msg;

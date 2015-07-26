@@ -12,7 +12,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.oocl.kary.kk.server.action.*;
-import com.oocl.kary.kk.server.model.KPacket;
+import com.oocl.kary.kk.server.model.Packet;
 import com.oocl.kary.kk.server.model.User;
 
 /**
@@ -58,7 +58,7 @@ public class Response implements Runnable {
 		BufferedReader in = null;
 		PrintWriter out = null;
 		String json = null;
-		KPacket packet = null;
+		Packet packet = null;
 
 		try {
 			/**
@@ -78,16 +78,26 @@ public class Response implements Runnable {
 				 */
 				json = in.readLine();
 
+				if (json == null) {
+					break;
+				}
+
 				System.out.println("GET:\t" + json);
 
-				packet = gson.fromJson(json, KPacket.class);
+				if (json.equals(Action.ADMIN_LOGIN)) {
+					out.println("admin login");
+					out.flush();
+				} else {
+					packet = gson.fromJson(json, Packet.class);
 
-				/**
-				 * 根据请求包的类型做出不同响应
-				 */
-				Class<?> actionClass = actionMap.get(packet.type);
-				Action action = (Action) actionClass.newInstance();
-				action.execute(packet, socket, users, session);
+					/**
+					 * 根据请求包的类型做出不同响应
+					 */
+					Class<?> actionClass = actionMap.get(packet.type);
+					Action action = (Action) actionClass.newInstance();
+					action.execute(packet, socket, users, session);
+				}
+
 			}
 
 		} catch (SocketException e) {
@@ -102,7 +112,7 @@ public class Response implements Runnable {
 			} catch (InstantiationException | IllegalAccessException e1) {
 				e1.printStackTrace();
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

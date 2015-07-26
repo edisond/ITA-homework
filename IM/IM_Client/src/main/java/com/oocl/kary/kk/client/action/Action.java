@@ -1,7 +1,7 @@
 package com.oocl.kary.kk.client.action;
 
 import com.google.gson.Gson;
-import com.oocl.kary.kk.client.model.KPacket;
+import com.oocl.kary.kk.client.model.Packet;
 import com.oocl.kary.kk.client.ui.MainFrame;
 
 public interface Action {
@@ -14,5 +14,5 @@ public interface Action {
 
 	public static final Gson GSON = new Gson();
 
-	public void execute(KPacket packet, final MainFrame frame);
+	public void execute(Packet packet, final MainFrame frame);
 }

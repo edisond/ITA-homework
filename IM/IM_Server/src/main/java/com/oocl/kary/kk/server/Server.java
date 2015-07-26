@@ -21,7 +21,7 @@ public class Server {
 		 * 读取配置信息
 		 */
 		Properties config = new Properties();
-		config.load(new FileInputStream("config.ini"));
+		config.load(Server.class.getResourceAsStream("config.ini"));
 
 		/**
 		 * 创建测试用户
@@ -66,8 +66,9 @@ public class Server {
 		/**
 		 * 读取测试用户至内存，并将在线状态设置为“离线”
 		 */
-		ObjectInputStream in = new ObjectInputStream(new FileInputStream(
-				"users.data"));
+		ObjectInputStream in = new ObjectInputStream(
+				Server.class.getResourceAsStream("users.data"));
+		
 		@SuppressWarnings({ "unchecked" })
 		List<User> users = (LinkedList<User>) in.readObject();
 		in.close();

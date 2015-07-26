@@ -12,7 +12,7 @@ import com.oocl.kary.kk.client.action.ChatAction;
 import com.oocl.kary.kk.client.action.GetUserAction;
 import com.oocl.kary.kk.client.action.GroupChatAction;
 import com.oocl.kary.kk.client.action.ShakeAction;
-import com.oocl.kary.kk.client.model.KPacket;
+import com.oocl.kary.kk.client.model.Packet;
 import com.oocl.kary.kk.client.ui.MainFrame;
 
 public class Response implements Runnable {
@@ -56,7 +56,7 @@ public class Response implements Runnable {
 
 				System.out.println("GET:\t" + json);
 
-				KPacket packet = gson.fromJson(json, KPacket.class);
+				Packet packet = gson.fromJson(json, Packet.class);
 
 				/**
 				 * 根据请求包的类型做出不同响应
