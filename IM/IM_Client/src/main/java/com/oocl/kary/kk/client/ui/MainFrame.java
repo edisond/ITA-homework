@@ -227,15 +227,13 @@ public class MainFrame extends JFrame implements Shakable {
 
 			list[i] = "<html>";
 
-			/*
-			 * list[i] += u.getState().equals("online") ?
-			 * "<img src='file:online.png'>" : "<img src='file:offline.png'>";
-			 */
+			list[i] += u.getState().equals("online") ? "<img src='file:online.png'>"
+					: "<img src='file:offline.png'>";
 
-			list[i] += "<font color='"
-					+ (u.getState().equals("online") ? "black" : "gray") + "'>";
+			// list[i] += "<font color='"
+			// + (u.getState().equals("online") ? "black" : "gray") + "'>";
 			list[i] += u.getUsername();
-			list[i] += "</font>";
+			// list[i] += "</font>";
 			/*
 			 * for (Packet msg : msgPackets) { if (!msg.read &&
 			 * msg.from.getId().equals(u.getId())) { list[i] += "     [new]";

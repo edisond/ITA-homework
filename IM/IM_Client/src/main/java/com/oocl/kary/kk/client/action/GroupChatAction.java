@@ -6,7 +6,6 @@ import com.oocl.kary.kk.client.model.Packet;
 import com.oocl.kary.kk.client.ui.MainFrame;
 
 public class GroupChatAction implements Action {
-	@Override
 	public void execute(Packet packet, final MainFrame frame) {
 		packet.read = false;
 		frame.getMsgPackets().add(packet);

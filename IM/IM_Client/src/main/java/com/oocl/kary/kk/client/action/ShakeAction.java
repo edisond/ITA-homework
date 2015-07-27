@@ -5,7 +5,6 @@ import com.oocl.kary.kk.client.ui.MainFrame;
 
 public class ShakeAction implements Action {
 
-	@Override
 	public void execute(Packet packet, MainFrame frame) {
 		frame.startShake();
 	}

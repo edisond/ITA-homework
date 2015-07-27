@@ -30,7 +30,6 @@ public class Response implements Runnable {
 		actionMap.put(Action.GET_USER, GetUserAction.class);
 	}
 
-	@Override
 	public void run() {
 		BufferedReader in = null;
 		PrintWriter out = null;

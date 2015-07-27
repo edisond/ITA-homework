@@ -9,7 +9,6 @@ import com.oocl.kary.kk.client.ui.MainFrame;
 
 public class GetUserAction implements Action {
 	@SuppressWarnings("unchecked")
-	@Override
 	public void execute(Packet packet, final MainFrame frame) {
 		frame.setUsers((LinkedList<User>) GSON.fromJson(packet.body.toString(),
 				new TypeToken<LinkedList<User>>() {
