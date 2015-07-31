@@ -1,4 +1,4 @@
-package com.oocl.kk.client.action;
+package com.oocl.kk.client.action.impl;
 
 import java.awt.EventQueue;
 import java.util.LinkedList;
@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import com.google.gson.reflect.TypeToken;
 import com.oocl.kary.pojo.Packet;
 import com.oocl.kary.pojo.User;
+import com.oocl.kk.client.action.Action;
 import com.oocl.kk.client.ui.MainFrame;
 
 public class GetUserAction implements Action {

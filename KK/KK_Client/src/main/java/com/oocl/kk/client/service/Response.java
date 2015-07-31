@@ -10,10 +10,10 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.oocl.kary.pojo.Packet;
 import com.oocl.kk.client.action.Action;
-import com.oocl.kk.client.action.ChatAction;
-import com.oocl.kk.client.action.GetUserAction;
-import com.oocl.kk.client.action.GroupChatAction;
-import com.oocl.kk.client.action.ShakeAction;
+import com.oocl.kk.client.action.impl.ChatAction;
+import com.oocl.kk.client.action.impl.GetUserAction;
+import com.oocl.kk.client.action.impl.GroupChatAction;
+import com.oocl.kk.client.action.impl.ShakeAction;
 import com.oocl.kk.client.ui.MainFrame;
 
 public class Response implements Runnable {

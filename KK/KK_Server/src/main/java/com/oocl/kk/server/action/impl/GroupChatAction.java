@@ -1,4 +1,4 @@
-package com.oocl.kk.server.action;
+package com.oocl.kk.server.action.impl;
 
 import java.net.Socket;
 import java.util.List;
@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.oocl.kary.pojo.Packet;
 import com.oocl.kary.pojo.User;
+import com.oocl.kk.server.action.Action;
 import com.oocl.kk.server.service.Request;
 
 public class GroupChatAction implements Action {

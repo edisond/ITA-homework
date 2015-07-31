@@ -29,7 +29,7 @@ public class UserDaoImpl implements Dao<User> {
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setInt(1, start);
-			pstm.setInt(2, start + length - 1);
+			pstm.setInt(2, length);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
 				User c = new User();

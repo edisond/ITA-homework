@@ -20,8 +20,8 @@ import com.google.gson.Gson;
 import com.oocl.kary.pojo.Packet;
 import com.oocl.kk.dao.impl.UserDaoImpl;
 import com.oocl.kk.jms.action.Action;
-import com.oocl.kk.jms.action.GetUserAction;
-import com.oocl.kk.jms.action.LoginAction;
+import com.oocl.kk.jms.action.impl.GetUserAction;
+import com.oocl.kk.jms.action.impl.LoginAction;
 
 /**
  * Hello world!
