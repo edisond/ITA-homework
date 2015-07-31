@@ -51,21 +51,26 @@ public class Jms {
 
 		consumer.setMessageListener(new MessageListener() {
 			public void onMessage(Message msg) {
-				TextMessage textMessage = (TextMessage) msg;
-				try {
-					String json = textMessage.getText();
-					Packet packet = GSON.fromJson(json, Packet.class);
-					try {
-						Action action=(Action) actionMap.get(packet.getType()).newInstance();
-						action.execute(packet);
-					} catch (InstantiationException e) {
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						e.printStackTrace();
+				final TextMessage textMessage = (TextMessage) msg;
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						try {
+							String json = textMessage.getText();
+							Packet packet = GSON.fromJson(json, Packet.class);
+							try {
+								Action action = (Action) actionMap.get(
+										packet.getType()).newInstance();
+								action.execute(packet);
+							} catch (InstantiationException
+									| IllegalAccessException e) {
+								e.printStackTrace();
+							}
+						} catch (JMSException e) {
+							e.printStackTrace();
+						}
 					}
-				} catch (JMSException e) {
-					e.printStackTrace();
-				}
+				}).start();
 			}
 		});
 	}
