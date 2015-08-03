@@ -1,4 +1,4 @@
-package com.oocl.kk.dao.util;
+package com.oocl.jee.util;
 
 import java.sql.Statement;
 import java.sql.Connection;

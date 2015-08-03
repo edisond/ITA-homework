@@ -1,4 +1,4 @@
-package com.oocl.kk.dao.impl;
+package com.oocl.jee.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,9 +8,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.oocl.kary.pojo.User;
-import com.oocl.kk.dao.Dao;
-import com.oocl.kk.dao.util.DbUtil;
+import com.oocl.jee.dao.Dao;
+import com.oocl.jee.pojo.User;
+import com.oocl.jee.util.DbUtil;
 
 public class UserDaoImpl implements Dao<User> {
 
@@ -37,9 +37,10 @@ public class UserDaoImpl implements Dao<User> {
 				c.setName(rs.getString("name"));
 				c.setPassword(rs.getString("password"));
 				c.setBirth(new Date(rs.getDate("birth").getTime()));
-				c.setAddr(rs.getString("address"));
-				c.setTel(rs.getString("tel"));
-				c.setSex(rs.getString("sex"));
+				c.setIdCard(rs.getString("idcard"));
+				c.setEmail(rs.getString("email"));
+				c.setNickName(rs.getString("nickname"));
+				c.setSex(rs.getBoolean("sex"));
 				result.add(c);
 			}
 		} catch (SQLException e) {
@@ -65,9 +66,10 @@ public class UserDaoImpl implements Dao<User> {
 				c.setName(rs.getString("name"));
 				c.setPassword(rs.getString("password"));
 				c.setBirth(new Date(rs.getDate("birth").getTime()));
-				c.setAddr(rs.getString("address"));
-				c.setTel(rs.getString("tel"));
-				c.setSex(rs.getString("sex"));
+				c.setIdCard(rs.getString("idcard"));
+				c.setEmail(rs.getString("email"));
+				c.setNickName(rs.getString("nickname"));
+				c.setSex(rs.getBoolean("sex"));
 				result.add(c);
 			}
 		} catch (SQLException e) {
@@ -94,9 +96,10 @@ public class UserDaoImpl implements Dao<User> {
 				result.setName(rs.getString("name"));
 				result.setPassword(rs.getString("password"));
 				result.setBirth(new Date(rs.getDate("birth").getTime()));
-				result.setAddr(rs.getString("address"));
-				result.setTel(rs.getString("tel"));
-				result.setSex(rs.getString("sex"));
+				result.setIdCard(rs.getString("idcard"));
+				result.setEmail(rs.getString("email"));
+				result.setNickName(rs.getString("nickname"));
+				result.setSex(rs.getBoolean("sex"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -108,7 +111,7 @@ public class UserDaoImpl implements Dao<User> {
 	@Override
 	public int add(User user) {
 		Connection con = DbUtil.getConnection();
-		String sql = "insert into users (name,password,birth,address,tel,sex) values (?,?,?,?,?,?)";
+		String sql = "insert into users (name,password,birth,sex,email,nickname,idcard) values (?,?,?,?,?,?,?)";
 		PreparedStatement pstm = null;
 		int rs = 0;
 		try {
@@ -116,9 +119,10 @@ public class UserDaoImpl implements Dao<User> {
 			pstm.setString(1, user.getName());
 			pstm.setString(2, user.getPassword());
 			pstm.setDate(3, new java.sql.Date(user.getBirth().getTime()));
-			pstm.setString(4, user.getAddr());
-			pstm.setString(5, user.getTel());
-			pstm.setString(6, user.getSex());
+			pstm.setBoolean(4, user.getSex());
+			pstm.setString(5, user.getEmail());
+			pstm.setString(6, user.getNickName());
+			pstm.setString(7, user.getIdCard());
 			rs = pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -147,7 +151,7 @@ public class UserDaoImpl implements Dao<User> {
 	@Override
 	public int update(User user) {
 		Connection con = DbUtil.getConnection();
-		String sql = "update users set name=?,password=?,birth=?,address=?,tel=?,sex=? where id=?";
+		String sql = "update users set name=?,password=?,birth=?,email=?,nickname=?,sex=?,idcard=? where id=?";
 		PreparedStatement pstm = null;
 		int rs = 0;
 		try {
@@ -155,10 +159,11 @@ public class UserDaoImpl implements Dao<User> {
 			pstm.setString(1, user.getName());
 			pstm.setString(2, user.getPassword());
 			pstm.setDate(3, new java.sql.Date(user.getBirth().getTime()));
-			pstm.setString(4, user.getAddr());
-			pstm.setString(5, user.getTel());
-			pstm.setString(6, user.getSex());
-			pstm.setInt(7, user.getId());
+			pstm.setString(4, user.getEmail());
+			pstm.setString(5, user.getNickName());
+			pstm.setBoolean(6, user.getSex());
+			pstm.setString(7, user.getIdCard());
+			pstm.setInt(8, user.getId());
 			rs = pstm.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -170,7 +175,7 @@ public class UserDaoImpl implements Dao<User> {
 	@Override
 	public int[] addAll(List<User> list) {
 		Connection con = DbUtil.getConnection();
-		String sql = "insert into users (name,password,birth,address,tel,sex) values (?,?,?,?,?,?)";
+		String sql = "insert into users (name,password,birth,email,nickname,sex,idcard) values (?,?,?,?,?,?)";
 		PreparedStatement pstm = null;
 		int[] rs = null;
 		try {
@@ -179,9 +184,10 @@ public class UserDaoImpl implements Dao<User> {
 				pstm.setString(1, user.getName());
 				pstm.setString(2, user.getPassword());
 				pstm.setDate(3, new java.sql.Date(user.getBirth().getTime()));
-				pstm.setString(4, user.getAddr());
-				pstm.setString(5, user.getTel());
-				pstm.setString(6, user.getSex());
+				pstm.setString(4, user.getEmail());
+				pstm.setString(5, user.getNickName());
+				pstm.setBoolean(6, user.getSex());
+				pstm.setString(7, user.getIdCard());
 				pstm.addBatch();
 			}
 			rs = pstm.executeBatch();
@@ -191,8 +197,8 @@ public class UserDaoImpl implements Dao<User> {
 		DbUtil.free(con, pstm, null);
 		return rs;
 	}
-	
-	public User findByNameAndPassword(String name,String password){
+
+	public User findByNameAndPassword(String name, String password) {
 		User result = null;
 		Connection con = DbUtil.getConnection();
 		String sql = "select * from users where name=? and password=?";
@@ -209,9 +215,10 @@ public class UserDaoImpl implements Dao<User> {
 				result.setName(rs.getString("name"));
 				result.setPassword(rs.getString("password"));
 				result.setBirth(new Date(rs.getDate("birth").getTime()));
-				result.setAddr(rs.getString("address"));
-				result.setTel(rs.getString("tel"));
-				result.setSex(rs.getString("sex"));
+				result.setIdCard(rs.getString("idcard"));
+				result.setEmail(rs.getString("email"));
+				result.setNickName(rs.getString("nickname"));
+				result.setSex(rs.getBoolean("sex"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
