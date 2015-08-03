@@ -13,7 +13,7 @@ public class DbUtil {
 	private static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
 	private static final String URL = "jdbc:mysql://localhost:3306/kary";
 	private static final String USER = "root";
-	private static final String PSW = "root";
+	private static final String PSW = "3363";
 	private static BasicDataSource dataSource;
 	static {
 		dataSource = new BasicDataSource();

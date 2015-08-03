@@ -22,7 +22,10 @@
 						<label>Confirm Password</label> <input type="password" name="psw2" class="form-control" />
 					</div>
 					<div class="form-group">
-						<label>Bitrh</label> <input type="date" name="bitrh" class="form-control" />
+						<label>Birth</label> <input type="date" name="birth" class="form-control" />
+					</div>
+					<div class="form-group">
+						<label>Nickname</label> <input type="text" name="nickname" class="form-control" />
 					</div>
 					<div class="form-group">
 						<label>Email</label> <input type="email" name="email" class="form-control" />
