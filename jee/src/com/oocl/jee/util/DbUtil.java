@@ -1,33 +1,39 @@
 package com.oocl.jee.util;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Statement;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Properties;
 
 import org.apache.commons.dbcp.BasicDataSource;
 
 public class DbUtil {
-
-	private static final String DRIVER_CLASS = "com.mysql.jdbc.Driver";
-	private static final String URL = "jdbc:mysql://localhost:3306/kary";
-	private static final String USER = "root";
-	private static final String PSW = "3363";
+	private static Properties config;
 	private static BasicDataSource dataSource;
 	static {
-		dataSource = new BasicDataSource();
-		dataSource.setDriverClassName(DRIVER_CLASS);
-		dataSource.setUrl(URL);
-		dataSource.setPassword(PSW);
-		dataSource.setUsername(USER);
+		config = new Properties();
+		try {
+			config.load(DbUtil.class.getResourceAsStream("config.ini"));
+			dataSource = new BasicDataSource();
+			dataSource.setDriverClassName(config.getProperty("driverClass"));
+			dataSource.setUrl(config.getProperty("url"));
+			dataSource.setPassword(config.getProperty("password"));
+			dataSource.setUsername(config.getProperty("user"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static Connection getConnection() {
 		Connection con = null;
 		try {
-			Class.forName(DRIVER_CLASS).newInstance();
-			con = DriverManager.getConnection(URL, USER, PSW);
+			Class.forName(config.getProperty("driverClass")).newInstance();
+			con = dataSource.getConnection();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

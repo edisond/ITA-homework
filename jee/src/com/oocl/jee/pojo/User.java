@@ -1,8 +1,13 @@
 package com.oocl.jee.pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String name;
 	private String password;
@@ -11,8 +16,6 @@ public class User {
 	private String nickName;
 	private String email;
 	private String idCard;
-	
-	
 
 	public String getNickName() {
 		return nickName;
@@ -45,7 +48,7 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -78,5 +81,4 @@ public class User {
 		this.birth = birth;
 	}
 
-	
 }

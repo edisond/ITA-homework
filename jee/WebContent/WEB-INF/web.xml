@@ -9,6 +9,19 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  <filter>
+    <display-name>CharsetFilter</display-name>
+    <filter-name>CharsetFilter</filter-name>
+    <filter-class>com.oocl.jee.filter.CharsetFilter</filter-class>
+    <init-param>
+      <param-name>encoding</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharsetFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <servlet>
     <description></description>
     <display-name>Login</display-name>
@@ -29,4 +42,49 @@
     <servlet-name>Register</servlet-name>
     <url-pattern>/Register</url-pattern>
   </servlet-mapping>
+  <listener>
+    <listener-class>com.oocl.jee.listener.SessionListener</listener-class>
+  </listener>
+  <servlet>
+    <description></description>
+    <display-name>UserList</display-name>
+    <servlet-name>UserList</servlet-name>
+    <servlet-class>com.oocl.jee.servlet.UserList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UserList</servlet-name>
+    <url-pattern>/UserList</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Logout</display-name>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>com.oocl.jee.servlet.Logout</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Logout</servlet-name>
+    <url-pattern>/Logout</url-pattern>
+  </servlet-mapping>
+  <filter>
+    <display-name>LoginFilter</display-name>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>com.oocl.jee.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/main.jsp</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/profile.jsp</url-pattern>
+  </filter-mapping>
+  <filter>
+    <display-name>ProfileFilter</display-name>
+    <filter-name>ProfileFilter</filter-name>
+    <filter-class>com.oocl.jee.filter.ProfileFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>ProfileFilter</filter-name>
+    <url-pattern>/profile.jsp</url-pattern>
+  </filter-mapping>
 </web-app>

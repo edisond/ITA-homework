@@ -3,8 +3,8 @@ package com.oocl.jee.servlet;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.regex.Pattern;
-
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,71 +12,80 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.oocl.jee.pojo.User;
 import com.oocl.jee.service.UserMng;
+import com.oocl.jee.validator.impl.LengthValidator;
+import com.oocl.jee.validator.impl.RegexValidator;
 
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException,
-			IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
-		final String WRONG_MSG_HEAD = "Check your form:\\r\\n";
+		Map<String, String> errorMap = new HashMap<String, String>();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		Pattern emailPattern = Pattern.compile("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*");
 
 		String name = request.getParameter("name");
 		String psw = request.getParameter("psw");
 		String psw2 = request.getParameter("psw2");
-		String nickname = request.getParameter("nickname");
-		String idcard = request.getParameter("idcard");
+		String nickName = request.getParameter("nickName");
+		String idCard = request.getParameter("idCard");
 		String email = request.getParameter("email");
 		Boolean sex = new Boolean(request.getParameter("sex"));
 		Date birth = null;
 		try {
 			birth = sdf.parse(request.getParameter("birth"));
 		} catch (Exception e) {
-
+			errorMap.put("birth", "Birth format do not match.");
 		}
 
-		String wrongMsg = WRONG_MSG_HEAD;
-		if (name == null || name.length() < 4 || name.length() > 8) {
-			wrongMsg += "Name: 4-8 chars\\r\\n";
+		if (!new LengthValidator(4, 8).validate(name)) {
+			errorMap.put("name", "Name: 4-8 chars");
 		}
-		if (psw == null || psw.length() < 6) {
-			wrongMsg += "Password: 6-n chars\\r\\n";
+		if (!new LengthValidator(6).validate(psw)) {
+			errorMap.put("psw", "Password: 6-n chars");
 		}
 		if (psw == null || psw2 == null || !psw.equals(psw2)) {
-			wrongMsg += "Passwords do not match\\r\\n";
+			errorMap.put("psw2", "Passwords do not match");
 		}
 		if (birth == null || birth.getTime() > new Date().getTime()) {
-			wrongMsg += "Date: 1900-now\\r\\n";
+			errorMap.put("birth", "Birth: 1900-now");
 		}
-		if (nickname == null || nickname.length() < 1 || nickname.length() > 8) {
-			wrongMsg += "Nickname: 1-8 chars\\r\\n";
+		if (!new LengthValidator(1, 8).validate(nickName)) {
+			errorMap.put("nickName", "Nick Name: 1-8 chars");
 		}
-		if (idcard == null || idcard.length() != 8) {
-			wrongMsg += "Id Card: 8 chars\\r\\n";
+		if (!new LengthValidator(8, 8).validate(idCard)) {
+			errorMap.put("idCard", "Id Card: 8 chars");
 		}
-		if (email == null || !emailPattern.matcher(email).matches()) {
-			wrongMsg += "Email: Illegal format\\r\\n";
+		if (!new RegexValidator("\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*").validate(email)) {
+			errorMap.put("email", "Email: Illegal format");
 		}
 
-		if (wrongMsg.equals(WRONG_MSG_HEAD)) {
+		if (errorMap.size() == 0) {
 			User user = new User();
 			user.setBirth(birth);
 			user.setEmail(email);
-			user.setIdCard(idcard);
+			user.setIdCard(idCard);
 			user.setName(name);
 			user.setPassword(psw);
 			user.setSex(sex);
-			user.setNickName(nickname);
+			user.setNickName(nickName);
 			if (UserMng.doRegister(user)) {
 				request.getSession().setAttribute("user", user);
-				response.sendRedirect("success.jsp");
+				request.getRequestDispatcher("UserList").forward(request, response);
 			} else {
 				response.getWriter().print("<script>alert('Error');location.href='register.jsp';</script>");
 			}
 		} else {
-			response.getWriter().print("<script>alert('" + wrongMsg + "');location.href='register.jsp';</script>");
+			request.setAttribute("errorMap", errorMap);
+			request.setAttribute("name", name);
+			request.setAttribute("psw", psw);
+			request.setAttribute("psw2", psw2);
+			request.setAttribute("nickName", nickName);
+			request.setAttribute("idCard", idCard);
+			request.setAttribute("email", email);
+			request.setAttribute("sex", sex);
+			request.setAttribute("birth", request.getParameter("birth"));
+			request.getRequestDispatcher("register.jsp").forward(request, response);
 		}
 
 	}
