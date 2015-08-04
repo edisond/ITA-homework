@@ -70,8 +70,7 @@ public class Register extends HttpServlet {
 			user.setSex(sex);
 			user.setNickName(nickName);
 			if (UserMng.doRegister(user)) {
-				request.getSession().setAttribute("user", user);
-				request.getRequestDispatcher("UserList").forward(request, response);
+				response.getWriter().print("<script>alert('Success');location.href='index.html';</script>");
 			} else {
 				response.getWriter().print("<script>alert('Error');location.href='register.jsp';</script>");
 			}

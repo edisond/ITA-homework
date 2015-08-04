@@ -16,6 +16,15 @@ public class User implements Serializable {
 	private String nickName;
 	private String email;
 	private String idCard;
+	private Boolean online;
+	
+	public Boolean getOnline() {
+		return online;
+	}
+
+	public void setOnline(Boolean online) {
+		this.online = online;
+	}
 
 	public String getNickName() {
 		return nickName;

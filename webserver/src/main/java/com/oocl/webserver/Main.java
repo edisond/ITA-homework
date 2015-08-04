@@ -4,7 +4,7 @@ public class Main
 {
     public static void main( String[] args ) throws Exception
     {
-    	StaticHttpServer server=new StaticHttpServer();
+    	HttpServer server=new HttpServer();
     	server.start();
     }
 }

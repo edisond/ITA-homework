@@ -9,11 +9,13 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class Response implements Runnable {
+import com.oocl.webserver.util.HttpHeaderGenerator;
+
+public class ServerThread implements Runnable {
 	Socket socket;
 	String root;
 
-	public Response(Socket socket, String root) {
+	public ServerThread(Socket socket, String root) {
 		this.socket = socket;
 		this.root = root;
 	}
@@ -28,43 +30,41 @@ public class Response implements Runnable {
 			String url = in.readLine();
 			String filePath = null;
 			String splitResult[] = null;
+			
+			System.out.println(url);
+			
 			if (url.startsWith("GET")) {
 				splitResult = url.split(" ");
 				filePath = splitResult[1].substring(1);
 				Path path = Paths.get(root, filePath);
-				String result = null;
 				if (!Files.exists(path)) {
-					result += "HTTP/1.1 404 Not Found Connection: close";
 					try {
-						out.write(result.toString().getBytes());
+						out.write(HttpHeaderGenerator.genarateNotFound().getBytes());
 						out.flush();
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				} else {
-					byte[] fileContents = null;
-					try {
-						fileContents = Files.readAllBytes(path);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+					byte[] fileContents = StaticResources.get(path);
 					if (fileContents != null) {
-						result += "HTTP/1.1 200 OK";
 						if (filePath.endsWith("html")) {
-							result += " Content-Type: text/html; charset=utf-8";
+							try {
+								out.write(HttpHeaderGenerator.genarateOK("html").getBytes());
+								out.write(fileContents);
+								out.flush();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						} else if (filePath.endsWith("jpg") || filePath.endsWith("jpeg")) {
-							result += " Content-Type: image/jpeg";
+							try {
+								out.write(HttpHeaderGenerator.genarateOK("image").getBytes());
+								out.write(fileContents);
+								out.flush();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
-						result += " Keep-Alive: -1";
-						result += " ";
-
-						try {
-							out.write(result.toString().getBytes());
-							out.write(fileContents);
-							out.flush();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
+						
 
 					}
 				}

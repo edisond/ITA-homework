@@ -23,4 +23,8 @@ public class UserMng {
 	public static User getUserById(int id) {
 		return dao.find(id);
 	}
+
+	public static void deleteUserById(int id) {
+		dao.delete(id);
+	}
 }

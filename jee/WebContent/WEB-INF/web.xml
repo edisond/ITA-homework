@@ -87,4 +87,14 @@
     <filter-name>ProfileFilter</filter-name>
     <url-pattern>/profile.jsp</url-pattern>
   </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteUser</display-name>
+    <servlet-name>DeleteUser</servlet-name>
+    <servlet-class>com.oocl.jee.servlet.DeleteUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteUser</servlet-name>
+    <url-pattern>/DeleteUser</url-pattern>
+  </servlet-mapping>
 </web-app>

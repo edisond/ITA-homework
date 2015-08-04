@@ -24,6 +24,7 @@
 							<th>Id</th>
 							<th>Name</th>
 							<th>Nick name</th>
+							<th>Online</th>
 							<th style="width: 150px">Action</th>
 						</tr>
 					</thead>
@@ -34,8 +35,16 @@
 								<td>${u.name}</td>
 								<td>${u.nickName}</td>
 								<td>
+									<jstl:if test="${u.online}">
+										<i class="glyphicon glyphicon-ok text-success"></i>
+									</jstl:if>
+									<jstl:if test="${!u.online}">
+										<i class="glyphicon glyphicon-minus text-muted"></i>
+									</jstl:if>
+								</td>
+								<td>
 									<jstl:if test="${!(u.id eq user.id)}">
-										<a href="#">delete</a>
+										<a href="DeleteUser?id=${u.id}" onclick="return confirm('Delete this user?')">delete</a>
 									</jstl:if>
 									<jstl:if test="${u.id eq user.id}">
 										<span class="text-muted">delete</span>
