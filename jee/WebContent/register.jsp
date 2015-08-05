@@ -112,7 +112,7 @@
 						</label>
 					</div>
 					<button type="submit" class="btn btn-block btn-success">Register</button>
-				</form>
+				</form>	
 			</div>
 		</div>
 	</div>

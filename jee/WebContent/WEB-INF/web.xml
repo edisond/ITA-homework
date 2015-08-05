@@ -97,4 +97,14 @@
     <servlet-name>DeleteUser</servlet-name>
     <url-pattern>/DeleteUser</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>UploadTest</display-name>
+    <servlet-name>UploadTest</servlet-name>
+    <servlet-class>com.oocl.jee.servlet.UploadTest</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UploadTest</servlet-name>
+    <url-pattern>/UploadTest</url-pattern>
+  </servlet-mapping>
 </web-app>
