@@ -1,10 +1,8 @@
 package com.oocl.o2o.servlet;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 import java.util.UUID;
 
 import javax.servlet.ServletException;
@@ -12,21 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.oocl.o2o.dao.impl.ImageDao;
+import com.oocl.o2o.pojo.Image;
 import com.oocl.o2o.pojo.User;
 import com.oocl.o2o.service.UserService;
 import com.oocl.o2o.util.FileUploadHelper;
+import com.oocl.o2o.util.JmsUtil;
 import com.oocl.o2o.validator.impl.LengthValidator;
 
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Properties config = new Properties();
-		config.load(new FileInputStream(getServletContext().getRealPath("/") + "config.ini"));
-		
-		String tempPath = getServletContext().getRealPath(config.getProperty("tempPath"));
-		String fileName = UUID.randomUUID() + ".jpg";
-		String filePath = getServletContext().getRealPath(config.getProperty("uploadPath") + "license/" + fileName);
+		String fileName = UUID.randomUUID().toString();
 		FileUploadHelper helper = new FileUploadHelper(request);
 		Map<String, String> params = helper.getParams();
 
@@ -55,12 +51,15 @@ public class RegisterServlet extends HttpServlet {
 			user.setTel(params.get("tel"));
 			user.setStatusId(2);
 			user.setRole("seller");
-			user.setLicense(fileName);
-			
+			byte[] imgBody=helper.getFile();
+			if (imgBody != null) {
+				user.setLicense(fileName);
+				new ImageDao().insert(new Image(fileName, imgBody));
+			}
 			if (UserService.doRegister(user)) {
-				helper.saveFile(tempPath, filePath);
 				request.getSession().setAttribute("user", user);
 				response.sendRedirect("/O2O_Seller/main/index.jsp");
+				JmsUtil.produce("msg");
 			} else {
 				response.getWriter().print("<script>alert('Error');location.href='/O2O_Seller/register.jsp';</script>");
 			}

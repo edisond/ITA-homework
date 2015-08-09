@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oocl.o2o.dao.impl.FoodDaoImpl;
+import com.oocl.o2o.dao.impl.FoodDao;
 import com.oocl.o2o.pojo.Food;
 
 /**
@@ -17,9 +17,9 @@ public class DeleteFoodServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer id = Integer.parseInt(request.getParameter("id"));
-		FoodDaoImpl daoImpl = new FoodDaoImpl();
-		Food food = daoImpl.findById(id);
-		daoImpl.deleteFood(food);
+		FoodDao dao = new FoodDao();
+		Food food = dao.findById(id);
+		dao.delete(food);
 		response.sendRedirect("/O2O_Seller/main/food.jsp?type=" + food.getFoodTypeId());
 	}
 

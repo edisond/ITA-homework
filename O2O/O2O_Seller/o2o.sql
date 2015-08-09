@@ -55,6 +55,13 @@ CREATE TABLE USERS
     STATUSID INTEGER NOT NULL
 );
 
+drop table if exists images;
+CREATE TABLE images
+(
+    id varchar(100) primary key,
+    body blob not null
+);
+
 insert into status (statusname) values ('approved');
 insert into status (statusname) values ('approving');
 insert into status (statusname) values ('deleted');
@@ -76,6 +83,26 @@ insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜1','10
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜2','20',1,1,2);
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜3','30',1,1,2);
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜4','40',1,1,3);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜1','10',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜2','20',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜3','30',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜4','40',1,1,3);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜1','10',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜2','20',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜3','30',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜4','40',1,1,3);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜1','10',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜2','20',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜3','30',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜4','40',1,1,3);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜1','10',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜2','20',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜3','30',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('主菜4','40',1,1,3);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('配菜1','10',1,2,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('配菜2','20',1,2,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('配菜3','30',1,2,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('配菜4','40',1,2,3);
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('配菜1','10',1,2,2);
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('配菜2','20',1,2,2);
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('配菜3','30',1,2,2);
@@ -84,4 +111,3 @@ insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('饮料1','10
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('饮料2','20',1,3,2);
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('饮料3','30',1,3,2);
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('饮料4','40',1,3,3);
-

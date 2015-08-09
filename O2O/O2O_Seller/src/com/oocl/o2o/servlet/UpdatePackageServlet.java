@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oocl.o2o.dao.impl.FoodPackageDaoImpl;
-import com.oocl.o2o.dao.impl.PackageDaoImpl;
+import com.oocl.o2o.dao.impl.FoodPackageDao;
+import com.oocl.o2o.dao.impl.PackageDao;
 import com.oocl.o2o.pojo.FoodPackage;
 import com.oocl.o2o.pojo.Package;
 import com.oocl.o2o.pojo.User;
 import com.oocl.o2o.util.Constants;
+import com.oocl.o2o.util.JmsUtil;
 
 /**
  * Servlet implementation class UpdatePackageServlet
@@ -31,11 +32,11 @@ public class UpdatePackageServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Integer id = Integer.parseInt(request.getParameter("id"));
-		PackageDaoImpl daoImpl = new PackageDaoImpl();
-		Package pkg = daoImpl.getById(id);
+		PackageDao dao = new PackageDao();
+		Package pkg = dao.findById(id);
 
-		FoodPackageDaoImpl foodPackageDaoImpl = new FoodPackageDaoImpl();
-		List<FoodPackage> foodPackages = foodPackageDaoImpl.findByPackageId(pkg.getPackageId());
+		FoodPackageDao foodPackageDao = new FoodPackageDao();
+		List<FoodPackage> foodPackages = foodPackageDao.findByPackageId(pkg.getPackageId());
 
 		request.setAttribute("pkg", pkg);
 		request.setAttribute("fpkgs", foodPackages);
@@ -57,22 +58,23 @@ public class UpdatePackageServlet extends HttpServlet {
 		pack.setStatusId(Constants.STSTUS_APPROVING);
 		pack.setUserId(user.getUserId());
 
-		PackageDaoImpl packageDaoImpl = new PackageDaoImpl();
-		FoodPackageDaoImpl foodPackageDaoImpl = new FoodPackageDaoImpl();
+		PackageDao packageDao = new PackageDao();
+		FoodPackageDao foodPackageDao = new FoodPackageDao();
 
-		packageDaoImpl.updatePackage(pack);
-		foodPackageDaoImpl.deleteByPackageId(pack.getPackageId());
+		packageDao.update(pack);
+		foodPackageDao.deleteByPackageId(pack.getPackageId());
 		for (String f : foods) {
-			try{
+			try {
 				Integer foodId = Integer.parseInt(f);
 				FoodPackage foodPackage = new FoodPackage(foodId, pack.getPackageId());
-				foodPackageDaoImpl.add(foodPackage);
-			} catch(Exception e){
+				foodPackageDao.insert(foodPackage);
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 
 		response.sendRedirect("/O2O_Seller/main/package.jsp");
+		JmsUtil.produce("msg");
 	}
 
 }

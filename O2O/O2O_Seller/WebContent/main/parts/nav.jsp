@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/jsp; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-default navbar-static-top">
 	<div class="container">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-nav">

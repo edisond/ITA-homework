@@ -6,12 +6,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.oocl.o2o.dao.impl.FoodPackageDaoImpl;
-import com.oocl.o2o.dao.impl.PackageDaoImpl;
+import com.oocl.o2o.dao.impl.FoodPackageDao;
+import com.oocl.o2o.dao.impl.PackageDao;
 import com.oocl.o2o.pojo.FoodPackage;
 import com.oocl.o2o.pojo.Package;
 import com.oocl.o2o.pojo.User;
 import com.oocl.o2o.util.Constants;
+import com.oocl.o2o.util.JmsUtil;
 
 /**
  * Servlet implementation class NewPackageServlet
@@ -32,23 +33,23 @@ public class NewPackageServlet extends HttpServlet {
 		pack.setStatusId(Constants.STSTUS_APPROVING);
 		pack.setUserId(user.getUserId());
 
-		PackageDaoImpl packageDaoImpl = new PackageDaoImpl();
-		FoodPackageDaoImpl foodPackageDaoImpl = new FoodPackageDaoImpl();
+		PackageDao packageDao = new PackageDao();
+		FoodPackageDao foodPackageDao = new FoodPackageDao();
 
-		Integer packId = packageDaoImpl.addPackage(pack);
+		Integer packId = packageDao.insert(pack);
 
 		for (String f : foods) {
 			try {
 				Integer foodId = Integer.parseInt(f);
 				FoodPackage foodPackage = new FoodPackage(foodId, packId);
-				foodPackageDaoImpl.add(foodPackage);
+				foodPackageDao.insert(foodPackage);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 
 		response.sendRedirect("/O2O_Seller/main/package.jsp");
-
+		JmsUtil.produce("msg");
 	}
 
 }

@@ -46,7 +46,9 @@ nav.navbar i {
 								<td>${food.foodId}</td>
 								<td>${food.foodName}</td>
 								<td>${food.price}</td>
-								<td>${food.pictureUrl}</td>
+								<td>
+									<img src="data:image/jpg;base64,${images[food.pictureUrl]}" width="100" />
+								</td>
 								<td>${food.statusId}</td>
 								<td>
 									<a href="UpdateFoodServlet?id=${food.foodId}">update</a>

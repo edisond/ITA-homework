@@ -65,21 +65,25 @@ nav.navbar i {
 								<span aria-hidden="true">&laquo;</span>
 							</a>
 						</li>
-						<li>
-							<a href="#">1</a>
-						</li>
-						<li>
-							<a href="#">2</a>
-						</li>
-						<li>
-							<a href="#">3</a>
-						</li>
-						<li>
-							<a href="#">4</a>
-						</li>
-						<li>
-							<a href="#">5</a>
-						</li>
+						<%
+							for (int i = 0; i < Integer.parseInt(request.getAttribute("packagesCount").toString()); i += 5) {
+								String url = request.getQueryString() == null ? "" : request.getQueryString();
+								Integer pg = request.getParameter("p") == null ? 1 : Integer.parseInt(request.getParameter("p").toString());
+								Integer current = (i / 5 + 1);
+								url = url.replaceAll("&*p=[1234567890]*", "");
+								if (url.equals("")) {
+									url += "p=" + current;
+								} else {
+									url += "&p=" + current;
+								}
+								url = request.getRequestURI() + "?" + url;
+								if (current == pg) {
+									out.write("<li class='active'><a href='javascript:;'>" + current + "</a></li>");
+								} else {
+									out.write("<li><a href='" + url + "'>" + current + "</a></li>");
+								}
+							}
+						%>
 						<li>
 							<a href="#" aria-label="Next">
 								<span aria-hidden="true">&raquo;</span>

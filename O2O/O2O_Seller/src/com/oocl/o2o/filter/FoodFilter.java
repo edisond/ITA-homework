@@ -1,7 +1,9 @@
 package com.oocl.o2o.filter;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -11,7 +13,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import com.oocl.o2o.dao.impl.FoodDaoImpl;
+import com.oocl.o2o.dao.impl.FoodDao;
 import com.oocl.o2o.pojo.Food;
 import com.oocl.o2o.pojo.User;
 import com.oocl.o2o.util.Constants;
@@ -46,7 +48,7 @@ public class FoodFilter implements Filter {
 		String type = req.getParameter("type");
 		Integer page = req.getParameter("p") == null ? 1 : Integer.parseInt(req.getParameter("p"));
 
-		FoodDaoImpl daoImpl = new FoodDaoImpl();
+		FoodDao dao = new FoodDao();
 		SearchCriteria criteria = new SearchCriteria();
 
 		criteria.getCriteria().add(new Criteria("userid", user.getUserId(), Criteria.EQUAL));
@@ -55,11 +57,26 @@ public class FoodFilter implements Filter {
 		if (type != null) {
 			criteria.getCriteria().add(new Criteria("foodtypeid", type, Criteria.EQUAL));
 		}
-		int count = daoImpl.findAllByCriteria(criteria).size();
+		int count = dao.findAllByCriteria(criteria).size();
 
 		criteria.setStart((page - 1) * 5);
 		criteria.setLength(5);
-		List<Food> list = daoImpl.findAllByCriteria(criteria);
+		List<Food> list = dao.findAllByCriteria(criteria);
+
+		Map<String, String> imgs = new HashMap<>();
+		for (Food f : list) {
+			if (f.getPictureUrl() != null) {
+				imgs.put(f.getPictureUrl(), null);
+			}
+		}
+
+		@SuppressWarnings("unchecked")
+		Map<String, String> images = (Map<String, String>) request.getAttribute("images");
+		if (images == null) {
+			images = new HashMap<>();
+		}
+		images.putAll(imgs);
+		request.setAttribute("images", images);
 
 		request.setAttribute("foods", list);
 		request.setAttribute("foodsCount", count);

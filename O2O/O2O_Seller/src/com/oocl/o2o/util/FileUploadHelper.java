@@ -1,6 +1,5 @@
 package com.oocl.o2o.util;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
@@ -43,17 +42,13 @@ public class FileUploadHelper {
 		return params;
 	}
 
-	public void saveFile(String tempPath, String filePath) {
-		factory.setRepository(new File(tempPath));
+	public byte[] getFile() {
 		for (FileItem item : items) {
-			if (!item.isFormField()) {
-				try {
-					item.write(new File(filePath));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+			if (!item.isFormField() && item.getSize() > 0) {
+				return item.get();
 			}
 		}
+		return null;
 	}
 
 	public boolean hasFile() {
