@@ -38,7 +38,7 @@ nav.navbar i {
 					</div>
 					<div class="form-group">
 						<label>Price</label>
-						<input type="number" name="price" class="form-control" required value="${pkg.price }" step="0.01"/>
+						<input type="number" name="price" class="form-control" required value="${pkg.price }" step="0.01" />
 					</div>
 					<div class="form-group">
 						<label>Foods</label>

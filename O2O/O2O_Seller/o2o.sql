@@ -111,3 +111,6 @@ insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('饮料1','10
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('饮料2','20',1,3,2);
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('饮料3','30',1,3,2);
 insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('饮料4','40',1,3,3);
+
+
+select * from images;

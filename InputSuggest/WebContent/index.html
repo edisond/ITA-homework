@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Input suggest</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="text-center">Search</h1>
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for..." id="inputSearch">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                </div>
+                <div id="suggests"></div>
+            </div>
+        </div>
+    </div>
+    <script src="js/XHR.js"></script>
+    <script src="js/SuggestionPanel.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
