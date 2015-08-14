@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class CharsetFilter implements Filter {
 
@@ -20,6 +21,8 @@ public class CharsetFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		request = (HttpServletRequest) request;
 		request.setCharacterEncoding(encoding);
+		HttpServletResponse res = (HttpServletResponse) response;
+		res.setHeader("Content-type", "text/html;charset=UTF-8");
 		chain.doFilter(request, response);
 	}
 

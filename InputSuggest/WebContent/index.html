@@ -1,25 +1,320 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html lang="">
 
 <head>
     <meta charset="UTF-8">
-    <title>Input suggest</title>
-    <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <title>My OOCL</title>
+    <link href="css/reset.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
+    <link href="css/suggest.css" rel="stylesheet">
 </head>
 
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-xs-12">
-                <h1 class="text-center">Search</h1>
-                <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search for..." id="inputSearch">
-                    <span class="input-group-btn">
-                        <button class="btn btn-default" type="button">Go!</button>
-                    </span>
+    <div class="page-wrapper">
+        <div class="header">
+            <div class="logo"></div>
+            <div class="others">
+                <div class="contact">
+                    <a href="#">更改地点</a>
+                    <a href="#">客户反馈</a>
+                    <a href="#">供应商反馈</a>
+                    <a href="#">联系我们</a>
+                    <a href="#">电子订阅</a>
+                    <input class="search" type="text" placeholder="Search.." />
                 </div>
-                <div id="suggests"></div>
+                <div class="lang">
+                    <a href="#">English</a>
+                    <a href="#">日本语</a>
+                    <a href="#" class="onlineChat"></a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="nav">
+            <ul>
+                <li>
+                    <a href="#">关于东方海外</a>
+                </li>
+                <li>
+                    <a href="#">我们的服务</a>
+                </li>
+                <li>
+                    <a href="#">各地网站</a>
+                </li>
+                <li>
+                    <a href="#">新闻与媒体</a>
+                </li>
+                <li>
+                    <a href="#">我们的办事处</a>
+                </li>
+                <li>
+                    <a href="#">资源中心</a>
+                </li>
+            </ul>
+        </div>
+        <div class="body">
+            <div class="left">
+                <div class="title first">
+                    东方海外公司新闻
+                </div>
+                <div class="panel">
+                    <ul class="bullet">
+                        <li>
+                            <p class="highlight">Aug 10, 2015</p>
+                            <p><a href="#">東方海外（國際）有限公司公佈二零一五年中期業績</a></p>
+                        </li>
+                        <li>
+                            <p class="highlight">Jul 28, 2015</p>
+                            <p><a href="#">G6联盟加强亚欧航线服务</a></p>
+                        </li>
+                        <li>
+                            <p class="highlight">Jul 27, 2015</p>
+                            <p><a href="#">G6联盟亚欧船期更新</a></p>
+                        </li>
+                        <li>
+                            <p class="highlight">Jul 24, 2015</p>
+                            <p><a href="#">东方海外国际宣布二零一五年第二季度营运概要</a></p>
+                        </li>
+                        <li>
+                            <p class="highlight">Jul 09, 2015</p>
+                            <p><a href="#">东方海外的环保数据取得双重报告认证标准</a></p>
+                        </li>
+                        <li>
+                            <p class="highlight">Jul 07, 2015</p>
+                            <p><a href="#">G6 联盟亚欧船期更新</a></p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="title">
+                    資源中心
+                </div>
+                <div class="panel last">
+                    <h5><b>业界相关信息</b></h5>
+                    <ul class="bullet condensed">
+                        <li>
+                            <a href="#">业界相关信息给您带来当前的业界新闻与视角。</a>
+                        </li>
+                    </ul>
+                    <h5><b>客户须知</b></h5>
+                    <ul class="bullet condensed">
+                        <li>
+                            <a href="#">中华人民共和国海关进出境运输工具舱单管理办法</a>
+                        </li>
+                        <li>
+                            <a href="#">欧洲共同体</a>
+                        </li>
+                        <li>
+                            <a href="#">美国及加拿大</a>
+                        </li>
+                    </ul>
+                    <h5><b>船舶证书</b></h5>
+                    <ul class="bullet condensed">
+                        <li>
+                            <a href="#">下载最新ISSC证书和船舶安全管理证书(MSC)</a>
+                        </li>
+                    </ul>
+                    <h5><b>海运词汇表</b></h5>
+                    <ul class="bullet condensed">
+                        <li>
+                            <a href="#">获悉更多航运术语</a>
+                        </li>
+                    </ul>
+                    <h5><b>网站入口</b></h5>
+                    <ul class="bullet condensed">
+                        <li>
+                            <a href="#">欢迎进入东方海外的供应商服务</a>
+                        </li>
+                    </ul>
+                    <h5><b>提单条款</b></h5>
+                    <ul class="bullet condensed">
+                        <li>
+                            <a href="#">提单 - 条款和条件</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="center">
+                <div class="banner"></div>
+                <div class="panel">
+                    <ul class="tabs">
+                        <li class="tab active">货物追踪</li>
+                        <li class="tab">船期表</li>
+                        <li class="tab">费率查询</li>
+                    </ul>
+                    <div class="panel-content">
+                        <form>
+                            <div class="group">
+                                <span class="label">提单号码: </span>
+                                <input type="text" class="input" id="inputSearch" />
+                                <div id="suggests"></div>
+                                <button type="button" class="go">Go</button>
+                            </div>
+                            <div class="group">
+                                <span class="label">订舱号码: </span>
+                                <input type="text" class="input" />
+                                <button type="button" class="go">Go</button>
+                            </div>
+                            <div class="group">
+                                <span class="label">集装箱号: </span>
+                                <input type="text" class="input" />
+                                <button type="button" class="go">Go</button>
+                            </div>
+                        </form>
+                        <ul class="bullet mt10">
+                            <li>
+                                <a href="#">船舶与铁路追踪</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="news">
+                    <div class="news-content">
+                        <div class="news-block">
+                            <img src="img/vesselatport.gif">
+                            <a href="#" class="promotionTitleLink">亚洲至欧洲航线运费上调通知</a> 东方海外宣布上调亚洲至欧洲航线运费。
+                        </div>
+                        <div class="news-block">
+                            <img src="img/vesselatport.gif">
+                            <a href="#" class="promotionTitleLink">亚欧航线–低硫燃油附加费讯息更新</a> 东方海外敬告各客户,与其他欧洲直挂港一样,所有来往歌德堡的货运,我司所收取的低硫燃油附加费,将减至每二十呎标准箱24美元。
+                        </div>
+                        <div class="news-block">
+                            <img src="img/vesselatport.gif">
+                            <a href="#" class="promotionTitleLink">东方海外亚洲至新西兰航线旺季附加费</a> 鉴于旺季客户对服务的需求增加,由九月一日开始,东方海外将对所有由亚洲(日本除外) 至新西兰航线的二十呎及四十呎的普通及冷冻集装箱货运分别收取150美元及300美元的附加费。
+                        </div>
+                        <div class="news-block">
+                            <img src="img/vesselatport.gif">
+                            <a href="#" class="promotionTitleLink">东方海外上调由东南亚至澳大利亚航线运费</a> 东方海外由東南亞至澳大利亞航线的服务收费持续处于低水平, 未能足够应付基本营运支出。
+                        </div>
+                        <div class="news-block">
+                            <img src="img/vesselatport.gif">
+                            <a href="#" class="promotionTitleLink">海上人命安全公约集装箱重量核实规定</a> 东方海外敬告各客户,国际海事组织已修订海上人命安全公约 (SOLAS)。
+                        </div>
+                    </div>
+                </div>
+                <div class="news">
+                    <div class="news-content">
+                        <div class="news-block">
+                            <img src="img/vesselatport.gif">
+                            <a href="#" class="promotionTitleLink">东方海外获颁发环境卓越金奖</a> 东方海外于昨天在香港会议展览中心举行的2014「香港环境卓越大奖」颁奖典礼中荣获交通及物流业界别的金奖。
+                        </div>
+                        <div class="news-block">
+                            <img src="img/vesselatport.gif">
+                            <a href="#" class="promotionTitleLink">东方海外行政总裁董立均先生荣获「港口领导人奖」</a> 美国长堤港颁发其最高荣誉的奖项「港口领导人奖」予东方海外货柜航运 (东方海外) 的行政总裁董立均先生以表扬其个人的卓越领导能力及在国际贸易方面的成就。颁奖礼于二零一四年十月十七日在香港一晚宴上举行。
+                        </div>
+                        <div class="news-block">
+                            <img src="img/vesselatport.gif">
+                            <a href="#" class="promotionTitleLink">东方海外为天文台及航运界作出贡献, 获香港天文台、世界气象组织及政府间海洋学委员会嘉奖</a> 东方海外欣然宣布,我们于二零一三年度为香港天文台提供重要的天气观察数据, 表现出色,获颁授两个奖项。
+                        </div>
+                        <div class="news-block">
+                            <img src="img/vesselatport.gif">
+                            <a href="#" class="promotionTitleLink">东方海外的自发环保行动获颁发「 环境成就奖」</a> 东方海外通过参与及支持长堤港的「绿旗计划」及「绿色船只激励计划」致力减排, 获加州长堤港颁发最新为表扬改善长堤港口小区环境作出贡献的航运商而设的「环境成就奖」。
+                        </div>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="right">
+                <div class="title OOCLCenter">
+                    登录我的OOCL中心
+                </div>
+                <div class="panel OOCLCenter">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tbody>
+                            <tr>
+                                <td width="68px" height="23">用户帐号:&nbsp;</td>
+                                <td colspan="2">
+                                    <input type="text" class="text" id="USER_NAME" name="USER_NAME" value="" size="13" maxlength="10" onblur="clearFocus();" onfocus="setEnterFocus(this);">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="68px" height="23">密码:&nbsp;</td>
+                                <td>
+                                    <input type="password" class="text" id="PASSWORD" name="PASSWORD" value="" size="13" maxlength="20" onblur="clearFocus();" onkeypress="enterpress(this, event);" onfocus="setEnterFocus(this);">
+                                </td>
+                                <td valign="bottom"></td>
+                                <td>
+                                    <table cellspacing="0" cellpadding="0" border="0">
+                                        <tbody>
+                                            <tr>
+                                                <td class="btnSigninLeft"></td>
+                                                <td id="signintd" class="btnSigninCenter signinLink">登录</a>
+                                                </td>
+                                                <td class="btnSigninRight"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="20" colspan="4">
+                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                        <tbody>
+                                            <tr>
+                                                <td width="64px">&nbsp;</td>
+                                                <td>
+                                                    <label>
+                                                        <input type="checkbox" id="chkRememberMOCUserID" name="chkRememberMOCUserID"> 记住我的用户帐号
+                                                    </label>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="mt10">
+                        <a href="#">忘记了密码或者用户帐号？</a></div>
+                    <div class="mt10">
+                        <a href="#">忘记你的IVR密码？</a>
+                    </div>
+                    <ul class="mt10 bullet inline">
+                        <li><a href="#">注册</a></li>
+                        <li><a href="#">认识我的OOCL中心</a></li>
+                    </ul>
+                    <div class="clear"></div>
+                </div>
+                <div class="title eservice">
+                    电子商务
+                </div>
+                <div class="panel eservice">
+                    <ul class="bullet">
+                        <li><a href="#"><b>我的OOCL中心</b></a></li>
+                        <li><a href="#"><b>出货文档</b></a></li>
+                        <li><a href="#"><b>服务需求</b></a></li>
+                        <li><a href="#"><b>订舱</b></a></li>
+                        <li><a href="#" class="ehighlight"><b>点击获取最新模版指南</b></a></li>
+                        <li><a href="#"><b>出运指示</b></a></li>
+                        <li><a href="#"><b>出货详情</b></a></li>
+                        <li><a href="#"><b>重要时间节点通知及例外警示</b></a></li>
+                        <li><a href="#"><b>提单管理</b></a></li>
+                        <li><a href="#"><b>到达通知</b></a></li>
+                        <li><a href="#"><b>发票与支付</b></a></li>
+                        <li><a href="#"><b>汇率</b></a></li>
+                        <li><a href="#"><b>报告</b></a></li>
+                        <li><a href="#"><b>货物追踪</b></a></li>
+                        <li><a href="#"><b>船舶及火车动态追踪</b></a></li>
+                        <li><a href="#"><b>船期表</b></a></li>
+                        <li><a href="#"><b>费率表和费率查询</b></a></li>
+                        <li><a href="#"><b>内陆费用查询&nbsp;<b class="highlight"><i>New</i></b></b></a></li>
+                        <li><a href="#"><b>集装箱规格查询&nbsp;<b class="highlight"><i>New</i></b></b></a></li>
+                        <li><a href="#"><b>电子订阅</b></a></li>
+                        <li><a href="#"><b>电子表单</b></a></li>
+                        <li><a href="#"><b>EDI</b></a></li>
+                    </ul>
+                    <img class="learn" src="img/learnmore_banner.gif">
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div class="footer">
+            <div class="links">
+                |&nbsp;<a href="http://www.oocl.com/schi/sitemap" class="footerNormalLink">网站结构</a>&nbsp;|&nbsp;<a href="http://www.oocl.com/schi/help" class="footerNormalLink">帮助</a>&nbsp;|&nbsp;<a href="http://www.oocl.com/schi/termsofuse" class="footerNormalLink">条例和法律</a>&nbsp;|&nbsp;<a href="http://www.oocl.com/schi/privacyandsecurity" class="footerNormalLink">隐私与安全</a>&nbsp;|&nbsp;<a href="http://www.oocl.com/schi/onlinesecurity" class="footerNormalLink">网上保安</a>&nbsp;|&nbsp;<a href="http://www.oocl.com/schi/customercommunicationspolicy" class="footerNormalLink">客户沟通政策</a>&nbsp;|
+            </div>
+            <div class="info">
+                <div class="copyright">版权&copy;1998 - 2015. 东方海外货柜航运有限公司。版权所有。</div>
+                <div class="logo"></div>
+                <div class="clear"></div>
             </div>
         </div>
     </div>

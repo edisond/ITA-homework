@@ -1,21 +1,388 @@
-#suggests {
+.mt5 {
+    margin-top: 5px;
+}
+.mt10 {
+    margin-top: 10px;
+}
+body {
+    background-color: #e5e5e5;
+    font-size: 12px;
+}
+b {
+    font-weight: bold;
+}
+i {
+    font-style: italic;
+}
+a {
+    color: #747474;
+    text-decoration: none;
+    font-size: 12px;
+}
+a:hover {
+    color: #e6001d;
+    text-decoration: underline;
+}
+.clear {
+    clear: both;
+}
+.highlight {
+    color: #e6001d;
+}
+ul.bullet {
+    list-style-image: url(../img/bullet_triangle.gif);
+    margin-left: 10px;
+}
+ul.bullet li {
+    margin: 10px 0;
+}
+ul.bullet.condensed li {
+    margin: 5px 0;
+}
+ul.bullet.inline li {
+    float: left;
+    margin: 0 10px;
+}
+.page-wrapper {
+    width: 950px;
+    margin: 10px auto;
+    background: #fff;
+    -webkit-box-shadow: 0 0 15px #888;
+    -moz-box-shadow: 0 0 15px #888;
+    box-shadow: 0 0 15px #888;
+}
+.header {
+    height: 90px;
+}
+.header .logo {
+    background: url(../img/oocl_logo.gif) 0 30px no-repeat;
+    height: 90px;
+    width: 140px;
+    float: left;
+}
+.header .others {
+    float: right;
+    height: 90px;
+    padding-right: 15px;
+}
+.header .others a {
+    margin-left: 15px;
+}
+.header .others .contact {
+    height: 30px;
+    text-align: right;
+    padding-top: 15px;
+}
+.header .others .contact .search {
+    margin-left: 20px;
+    background: url('../img/search_center.gif') repeat-x;
+    border-radius: 10px;
+    width: 100px;
+}
+.header .others .lang {
+    height: 30px;
+    text-align: right;
+    padding-top: 15px;
+    padding-right: 140px;
+    position: relative;
+}
+.header .others .lang .onlineChat {
+    width: 113px;
+    height: 33px;
     position: absolute;
-    left: 15px;
-    right: 15px;
+    right: 0;
+    top: 0;
+    display: inline-block;
+    background-image: url(../img/icon_online_chat.gif);
+    cursor: pointer;
 }
-#suggests ul {
-    padding: 10px 0;
+.nav {
+    background: url('../img/bg_main_menu.gif') repeat-x bottom;
+    background-color: #FFFFFF;
+    border-top: #bbbbbb solid 1px;
+    height: 27px;
+}
+.nav ul {
     list-style: none;
-    max-height: 300px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    border-width: 0 1px 1px;
-    border-style: solid;
-    border-color: #e5e5e5;
 }
-#suggests ul li {
-    padding: 2px 15px;
+.nav ul li {
+    float: left;
+    padding: 0 10px;
 }
-#suggests ul li:hover {
-    background: #e5e5e5;
+.nav ul li:hover {
+    background: url('../img/bg_submenu_mouseover.gif') repeat-x left bottom;
+    background-size: contain;
+    background-color: #F4E6E6;
+    padding: 2px 9px;
+    border-top: 0px none #bbbbbb;
+    border-bottom: 1px solid #c6c8ca;
+    border-left: #bbbbbb solid 1px;
+    border-right: #bbbbbb solid 1px;
+    padding: 0 9px;
+}
+.nav ul li a {
+    font-weight: bold;
+    color: #000;
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 25px;
+}
+.nav ul li:hover a {
+    color: red;
+}
+.footer {
+    background: url('../img/bg_footer.gif') repeat-x bottom;
+    background-color: #FFFFFF;
+    border-top: #bbbbbb solid 1px;
+    height: 47px;
+    margin-top: 20px;
+}
+.footer .links {
+    margin-top: 5px;
+    padding-left: 15px;
+    font-size: 12px;
+    color: #747474;
+}
+.footer .info {
+    margin-top: 5px;
+}
+.footer .info .copyright {
+    margin-top: 5px;
+    padding-left: 15px;
+    font-size: 12px;
+    float: left;
+}
+.footer .info .logo {
+    background: url(../img/OOIL.gif) top left no-repeat;
+    height: 20px;
+    width: 109px;
+    float: right;
+}
+.body {
+    padding-top: 10px;
+    background: #fff;
+}
+.body .left {
+    float: left;
+    width: 200px;
+    min-height: 100px;
+}
+.body .left .title {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #FFFFFF;
+    background: url('../img/bg_resource_center.gif') repeat-x;
+    height: 28px;
+    line-height: 28px;
+}
+.body .left .title.first {
+    background: url('../img/bg_corporate_news.gif') repeat-x;
+}
+.body .left .panel {
+    background-color: #ffffff;
+    border-left: 0px solid #b9b9b9;
+    border-bottom: 0px solid #b9b9b9;
+    border-top: 0px solid #b9b9b9;
+    border-right: 1px solid #b9b9b9;
+    min-height: 100px;
+    padding: 10px 15px 15px;
+}
+.body .left .panel.last {
+    background-color: #ffffff;
+    background: url('../img/bg_resource_center_content.gif') bottom left no-repeat;
+    border-left: 0px solid #b9b9b9;
+    border-bottom: 1px solid #b9b9b9;
+    border-top: 0px solid #b9b9b9;
+    border-right: 1px solid #b9b9b9;
+}
+.body .left .panel h5 {
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+.body .right {
+    float: left;
+    width: 270px;
+    min-height: 100px;
+}
+.body .center {
+    float: left;
+    width: 480px;
+    min-height: 100px;
+}
+.body .right .title {
+    padding-left: 10px;
+    padding-right: 10px;
+    color: #FFFFFF;
+    height: 28px;
+    line-height: 28px;
+}
+.body .right .title.OOCLCenter {
+    background: url('../img/bg_oocl_center.gif') top left no-repeat;
+    background-size: cover;
+    height: 28px;
+}
+.body .right .panel {
+    min-height: 100px;
+    margin-bottom: 20px;
+    padding: 10px 15px 15px;
+}
+.body .right .panel.OOCLCenter {
+    background-color: #ffffff;
+    background: url('../img/bg_oocl_center_content.gif') bottom repeat-x;
+    border-left: 1px solid #bbbbbb;
+    border-bottom: 1px solid #bbbbbb;
+    border-top: 0px solid #bbbbbb;
+    border-right: 0px solid #bbbbbb;
+    box-shadow: 0 0 5px #888;
+    padding-bottom: 15px;
+}
+.body .right .title.eservice {
+    background: url('../img/bg_eservice.gif') top left no-repeat;
+    background-size: cover;
+    height: 28px;
+    color: #404040
+}
+.body .right .panel.eservice {
+    background: url('../img/bg_eservice_content.gif') bottom right no-repeat;
+    background-color: #ffffff;
+    border-left: 1px solid #7ac4d2;
+    border-bottom: 1px solid #7ac4d2;
+    border-top: 0px solid #7ac4d2;
+    border-right: 0px solid #7ac4d2;
+    padding-bottom: 15px;
+}
+.body .right .panel.eservice .ehighlight {
+    color: #5D89CE;
+}
+.body .right .panel.eservice .learn {
+    width: 256px;
+    height: 45px;
+    margin-left: -10px;
+}
+.body .right .panel.OOCLCenter .btnSigninLeft {
+    background: url('../img/btn_signin_left.gif') no-repeat;
+    height: 18px;
+    width: 8px;
+}
+.body .right .panel.OOCLCenter .btnSigninCenter {
+    background: url('../img/btn_signin_center.gif') repeat-x;
+    height: 18px;
+    width: 25px;
+    color: #ffffff;
+    line-height: 18px;
+    vertical-align: top;
+    cursor: pointer;
+}
+.body .right .panel.OOCLCenter .btnSigninRight {
+    background: url('../img/btn_signin_right.gif') no-repeat;
+    height: 18px;
+    width: 8px;
+}
+.body .center .banner {
+    width: 465px;
+    height: 105px;
+    margin: 0 auto;
+    background: url(../img/oocllite.gif) top left no-repeat;
+    background-size: cover;
+}
+.body .center .panel {
+    width: 465px;
+    height: 180px;
+    margin: 20px auto 0;
+    background-size: cover;
+}
+.body .center .panel .tabs {
+    height: 25px;
+    list-style: none;
+}
+.body .center .panel .tabs li {
+    float: left;
+    padding: 0 50px;
+    height: 23px;
+    line-height: 23px;
+    font-weight: bold;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid #999;
+    background-color: #eee;
+    margin-right: 5px;
+    cursor: pointer;
+    position: relative;
+}
+.body .center .panel .tabs li.active {
+    background-color: #0C76B4;
+    color: #fff;
+    border: 1px solid #197FBB;
+}
+.body .center .panel .tabs li.active:after {
+    height: 0;
+    width: 0;
+    content: '';
+    border: 10px solid transparent;
+    border-top: 10px solid #0C76B4;
+    position: absolute;
+    top: 23px;
+    left: 60px;
+    z-index: 10;
+}
+.body .center .panel .panel-content {
+    border: 1px solid #59a6d3;
+    background: url('../img/bg_tab_content.gif') repeat-x bottom;
+    background-color: #FFF;
+    height: 135px;
+    padding: 10px;
+    position: relative;
+}
+.body .center .panel .panel-content .group {
+    margin: 10px 0;
+}
+.body .center .panel .panel-content .label {
+    display: inline-block;
+    width: 70px;
+}
+.body .center .panel .panel-content .input {
+    width: 300px;
+}
+.body .center .panel .panel-content .go {
+    width: 40px;
+    background: #0C76B4;
+    color: white;
+    border: 0;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.body .center .news {
+    float: left;
+    width: 50%;
+}
+.body .center .news .news-content {
+    padding: 10px;
+}
+.body .center .news .news-block {
+    color: #555555;
+    line-height: 18px;
+    margin-top: 20px;
+}
+.body .center .news .news-block img {
+    border: 1px solid #404040;
+    float: left;
+    margin-left: 0px;
+    margin-top: 0px;
+    margin-right: 12px;
+    margin-bottom: 8px;
+    width: 50px;
+    height: 50px;
+}
+.body .center .news .news-block a {
+    font-weight: bold;
+    color: #1364ac;
+    text-decoration: none;
+    padding-bottom: 3px;
+    padding-left: 0px;
+    text-align: left;
+    vertical-align: top;
+}
+.body .center .news .news-block a:hover {
+    color: #f00;
+    text-decoration: underline;
 }

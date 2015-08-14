@@ -1,7 +1,7 @@
 package com.oocl.o2o.servlet;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.io.PrintWriter;
 import java.util.Map;
 import java.util.UUID;
 
@@ -10,8 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import com.oocl.o2o.dao.impl.ImageDao;
 import com.oocl.o2o.pojo.Image;
+import com.oocl.o2o.pojo.Packet;
 import com.oocl.o2o.pojo.User;
 import com.oocl.o2o.service.UserService;
 import com.oocl.o2o.util.FileUploadHelper;
@@ -25,25 +27,29 @@ public class RegisterServlet extends HttpServlet {
 		String fileName = UUID.randomUUID().toString();
 		FileUploadHelper helper = new FileUploadHelper(request);
 		Map<String, String> params = helper.getParams();
+		boolean validate = true;
 
-		Map<String, String> errorMap = new HashMap<String, String>();
 		if (!new LengthValidator(4, 8).validate(params.get("name"))) {
-			errorMap.put("name", "Name: 4-8 chars");
+			validate = false;
 		}
 		if (!new LengthValidator(6).validate(params.get("psw"))) {
-			errorMap.put("psw", "Password: 6-n chars");
+			validate = false;
 		}
 		if (params.get("psw") == null || params.get("confirmPsw") == null || !params.get("psw").equals(params.get("confirmPsw"))) {
-			errorMap.put("confirmPsw", "Passwords do not match");
+			validate = false;
 		}
 		if (!new LengthValidator(11, 11).validate(params.get("tel"))) {
-			errorMap.put("tel", "Tel: 11 chars");
+			validate = false;
 		}
 		if (!new LengthValidator(8, 8).validate(params.get("idCard"))) {
-			errorMap.put("idCard", "Id Card: 8 chars");
+			validate = false;
 		}
 
-		if (errorMap.size() == 0) {
+		Gson gson = new Gson();
+		Packet packet = new Packet();
+		PrintWriter writer = response.getWriter();
+
+		if (validate) {
 			User user = new User();
 			user.setIdCard(params.get("idCard"));
 			user.setUserName(params.get("name"));
@@ -51,27 +57,28 @@ public class RegisterServlet extends HttpServlet {
 			user.setTel(params.get("tel"));
 			user.setStatusId(2);
 			user.setRole("seller");
-			byte[] imgBody=helper.getFile();
+			byte[] imgBody = helper.getFile();
 			if (imgBody != null) {
 				user.setLicense(fileName);
 				new ImageDao().insert(new Image(fileName, imgBody));
 			}
 			if (UserService.doRegister(user)) {
 				request.getSession().setAttribute("user", user);
-				response.sendRedirect("/O2O_Seller/main/index.jsp");
+				packet.setStatus("success");
 				JmsUtil.produce("msg");
 			} else {
-				response.getWriter().print("<script>alert('Error');location.href='/O2O_Seller/register.jsp';</script>");
+				packet.setStatus("fail");
+				packet.setMessage("ERROR");
 			}
 		} else {
-			request.setAttribute("errorMap", errorMap);
-			request.setAttribute("name", params.get("name"));
-			request.setAttribute("psw", params.get("psw"));
-			request.setAttribute("pswConfirm", params.get("pswConfirm"));
-			request.setAttribute("tel", params.get("tel"));
-			request.setAttribute("idCard", params.get("idCard"));
-			request.getRequestDispatcher("/register.jsp").forward(request, response);
+			packet.setStatus("fail");
+			packet.setMessage("ERROR");
 		}
+
+		String json=gson.toJson(packet);
+		writer.write(json);
+		writer.flush();
+		writer.close();
 
 	}
 

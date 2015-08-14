@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html lang="">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nome do Documento</title>
+    <style>
+        .s {
+            border: 1px solid red;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="s">123</div>
+    <div id="a">a</div>
+    <div id="b">b</div>
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $('#a').clone().appendTo('#a').end().clone().appendTo('#b')
+        $('<div>').appendTo('body')
+
+    </script>
+</body>
+
+</html>

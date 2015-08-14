@@ -14,7 +14,7 @@ public class UserService {
 
 	public static User doLogin(String name, String psw) {
 		User user = dao.findByName(name);
-		if (user.getPassWord().equals(psw)) {
+		if (user != null && user.getPassWord().equals(psw)) {
 			return user;
 		}
 		return null;

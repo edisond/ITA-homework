@@ -39,7 +39,7 @@ public class CheckLoginFilter implements Filter {
 		HttpServletResponse res = (HttpServletResponse) response;
 		HttpSession session = req.getSession(false);
 		if (session == null || session.getAttribute("user") == null) {
-			res.sendRedirect("/O2O_Seller/login.jsp");
+			res.sendRedirect("/O2O_Seller/login.html");
 		} else {
 			chain.doFilter(request, response);
 		}

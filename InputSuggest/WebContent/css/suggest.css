@@ -1,0 +1,20 @@
+#suggests {
+    position: absolute;
+    left: 85px;
+    right: 72px;
+}
+#suggests ul {
+    padding: 10px 0;
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+}
+#suggests ul li {
+    padding: 2px 15px;
+}
+#suggests ul li:hover {
+    background: #e5e5e5;
+}

@@ -152,7 +152,6 @@ public class UserDao extends Db implements Dao<User> {
 			if (resultSet.next()) {
 				user = this.buildUserFromResultSet(resultSet);
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

@@ -170,4 +170,34 @@
     <filter-name>ImageFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetSessionInfoServlet</display-name>
+    <servlet-name>GetSessionInfoServlet</servlet-name>
+    <servlet-class>com.oocl.o2o.servlet.GetSessionInfoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetSessionInfoServlet</servlet-name>
+    <url-pattern>/main/GetSessionInfoServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetFoodTypesServlet</display-name>
+    <servlet-name>GetFoodTypesServlet</servlet-name>
+    <servlet-class>com.oocl.o2o.servlet.GetFoodTypesServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetFoodTypesServlet</servlet-name>
+    <url-pattern>/main/GetFoodTypesServlet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetFoodServlet</display-name>
+    <servlet-name>GetFoodServlet</servlet-name>
+    <servlet-class>com.oocl.o2o.servlet.GetFoodServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetFoodServlet</servlet-name>
+    <url-pattern>/main/GetFoodServlet</url-pattern>
+  </servlet-mapping>
 </web-app>

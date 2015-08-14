@@ -1,0 +1,269 @@
+a {
+    color: #08c;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+.clear {
+    clear: both;
+}
+.wrapper {
+    width: 100%;
+    overflow: hidden;
+    font-family: 'Myriad Set Pro', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+.nav {
+    height: 44px;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: #000;
+    position: absolute;
+    z-index: 10;
+}
+.nav .nav-content {
+    max-width: 1024px;
+    margin: 0 auto;
+    height: 100%;
+    color: #fff;
+}
+.nav .nav-content ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    height: 100%;
+}
+.nav .nav-content ul li {
+    float: left;
+    height: 100%;
+    width: 11.1111111%;
+    line-height: 44px;
+    text-align: center;
+    cursor: pointer;
+    -webkit-transition: opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+    transition: opacity 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+.nav .nav-content ul li:hover {
+    opacity: .65;
+}
+.nav .nav-content ul li.logo {
+    background: url(http://www.apple.com/ac/globalnav/2.0/en_US/images/ac-globalnav/globalnav/apple/image_large.svg) center center no-repeat;
+}
+.nav .nav-content ul li.search {
+    background: url(http://www.apple.com/ac/globalnav/2.0/en_US/images/ac-globalnav/globalnav/search/image_large.svg) center center no-repeat;
+}
+.nav .nav-content ul li.bag {
+    background: url(http://www.apple.com/ac/globalnav/2.0/en_US/images/ac-globalnav/globalnav/bag/image_large.svg) center center no-repeat;
+}
+.nav .nav-content ul li.mac {
+    background: url(http://www.apple.com/ac/globalnav/2.0/en_US/images/ac-globalnav/globalnav/links/mac/image_large.svg) center center no-repeat;
+}
+.nav .nav-content ul li.ipad {
+    background: url(http://www.apple.com/ac/globalnav/2.0/en_US/images/ac-globalnav/globalnav/links/ipad/image_large.svg) center center no-repeat;
+}
+.nav .nav-content ul li.iphone {
+    background: url(http://www.apple.com/ac/globalnav/2.0/en_US/images/ac-globalnav/globalnav/links/iphone/image_large.svg) center center no-repeat;
+}
+.nav .nav-content ul li.watch {
+    background: url(http://www.apple.com/ac/globalnav/2.0/en_US/images/ac-globalnav/globalnav/links/watch/image_large.svg) center center no-repeat;
+}
+.nav .nav-content ul li.music {
+    background: url(http://www.apple.com/ac/globalnav/2.0/en_US/images/ac-globalnav/globalnav/links/music/image_large.svg) center center no-repeat;
+}
+.nav .nav-content ul li.support {
+    background: url(http://www.apple.com/ac/globalnav/2.0/en_US/images/ac-globalnav/globalnav/links/support/image_large.svg) center center no-repeat;
+}
+.body .carousel {
+    height: 652px;
+    background: url(http://images.apple.com/v/home/bx/images/music_hero_medium.jpg) top left no-repeat;
+    background-size: cover;
+    position: relative;
+}
+.body .carousel .copy-inner {
+    position: relative;
+    top: 35%;
+}
+.body .carousel .copy-inner * {
+    text-align: center;
+}
+.body .carousel .copy-inner h1 {
+    background-size: 284px 69px;
+    height: 69px;
+    width: 284px;
+    margin: 0 auto;
+    margin-bottom: .45em;
+    background-image: url("http://images.apple.com/v/home/bx/images/music_logo_medium.png");
+}
+.body .carousel .copy-inner h2 {
+    color: #eee;
+    margin-bottom: 0.25em;
+    font-size: 32px;
+    line-height: 1.125;
+    font-weight: 200;
+}
+.body .carousel .copy-inner ul.links {
+    margin: 0 auto;
+    text-align: center;
+}
+.body .carousel .copy-inner ul.links li {
+    text-align: center;
+    display: inline-block;
+    margin-left: 0.35em;
+    margin-right: 0.35em;
+    margin-bottom: .5em;
+}
+.body .carousel .copy-inner ul.links li a {
+    color: #eee;
+    font-size: 20px;
+    line-height: 1.4;
+    font-weight: 200;
+}
+.body .carousel .dotnav {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 15px;
+    right: 0;
+    background: transparent;
+    height: 40px;
+    text-align: center;
+    z-index: 5;
+}
+.body .carousel .dotnav ul {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+}
+.body .carousel .dotnav ul li {
+    list-style: none;
+    margin: 0 10px;
+    width: 8px;
+    height: 8px;
+    float: left;
+    position: relative;
+}
+.body .carousel .dotnav ul li a.dotnav-item.current {
+    top: -1px;
+    left: -1px;
+    width: 8px;
+    height: 8px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #08c;
+    background-color: transparent;
+    cursor: default;
+}
+.body .carousel .dotnav ul li a.dotnav-item {
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    outline: none;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #999;
+    font: 0/0 a;
+    color: transparent;
+}
+.body .products {
+    height: 202px;
+}
+.body .products ul {
+    height: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.body .products ul li {
+    float: left;
+    height: 100%;
+    width: 25%;
+}
+.body .products ul li a {
+    display: block;
+    height: 100%;
+    margin: 0 1px;
+    cursor: pointer;
+}
+.body .products ul li a.pd1 {
+    background: url(http://images.apple.com/v/home/bx/images/promo_shop_large.jpg) top center no-repeat;
+    background-size: cover;
+}
+.body .products ul li a.pd2 {
+    background: url(http://images.apple.com/v/home/bx/images/promo_ipod_large.png) top center no-repeat;
+    background-size: cover;
+}
+.body .products ul li a.pd3 {
+    background: url(http://images.apple.com/v/home/bx/images/promo_back_to_school_large.jpg) top center no-repeat;
+    background-size: cover;
+}
+.body .products ul li a.pd4 {
+    background: url(http://images.apple.com/v/home/bx/images/promo_camera_large.jpg) top center no-repeat;
+    background-size: cover;
+}
+.body .banner {
+    height: 70px;
+    text-align: center;
+}
+.body .banner a {
+    line-height: 70px;
+    font-family: 'Myriad Set Pro', 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: normal;
+}
+.footer {
+    font-size: 12px;
+    line-height: 1.66667;
+    font-weight: 400;
+    min-width: 1024px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+    background-color: #f2f2f2;
+    color: #666;
+}
+.footer .content {
+    margin: 0 auto;
+    padding: 0 22px;
+    max-width: 980px;
+    padding: 24px;
+    color: #999;
+}
+.footer .content .info {
+    border-bottom: 1px solid #e3e3e3;
+    padding-bottom: 5px;
+    margin-bottom: 6px;
+}
+.footer .content .copyright {
+    margin-right: 26px;
+    float: left;
+}
+.footer .content .legal {
+    float: left;
+}
+.footer .content .legal a {
+    border-right: 1px solid #d6d6d6;
+    margin-right: 10px;
+    padding-right: 12px;
+    white-space: nowrap;
+    color: #666;
+}
+.footer .content .locale {
+    float: right;
+}
+.footer .content .locale .locale-flag {
+    background-repeat: no-repeat;
+    background-size: 16px 16px;
+    height: 16px;
+    width: 16px;
+    background-image: url("http://images.apple.com/ac/globalfooter/2.0/en_US/images/ac-globalfooter/globalfooter/footer/country/flag_large.png");
+    float: left;
+    margin: 1px 5px 0 0;
+    cursor: pointer;
+}
+.footer .content .locale .locale-link {
+    display: inline;
+    color: #666;
+}
