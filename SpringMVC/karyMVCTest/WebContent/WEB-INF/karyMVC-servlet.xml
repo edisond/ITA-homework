@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<bean id="interceptorA" class="com.kary.mvc.interceptor.InterceptorA"></bean>
+	<bean id="interceptorB" class="com.kary.mvc.interceptor.InterceptorB"></bean>
+	<bean id="interceptorC" class="com.kary.mvc.interceptor.InterceptorC"></bean>
+	<bean id="handlerMapping"
+		class="com.kary.mvc.framework.handlermapping.impl.BeanNameUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="interceptorA" />
+				<ref bean="interceptorB" />
+				<ref bean="interceptorC" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="handlerAdapter"
+		class="com.kary.mvc.framework.handleradapter.impl.SimpleControllerHandlerAdapter"></bean>
+
+	<bean id="viewResolver"
+		class="com.kary.mvc.framework.viewresolver.impl.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<bean name="/login.action" class="com.kary.mvc.controller.LoginController"></bean>
+</beans>

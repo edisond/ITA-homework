@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans>
+	<bean id="interceptor1" class="interceptors.Xxx"></bean>
+	<bean id="interceptor2" class="interceptors.Xxx"></bean>
+	<bean class="cn.johnyu.mymvc.framework.BeanNameUrlHandlerMapping">
+		<property name="interceptors">
+			<list>
+				<ref bean="interceptor1" />
+				<ref bean="interceptor2" />
+			</list>
+		</property>
+	</bean>
+	<bean class="cn.johnyu.mymvc.framework.SimpleControllerHandlerAdapter"></bean>
+	
+	<bean id="viewResolver" class="cn.johnyu.mymvc.framework.InternalResourceViewResolver">
+		<property name="prefix" value="/"></property>
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+	<bean name="/test" class="controllers.Xxxx"></bean>
+</beans>
