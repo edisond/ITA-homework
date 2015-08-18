@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Main</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1 class="page-header">Welcome...</h1>
+                <div>
+                    <button class="btn btn-success" data-toggle="modal" data-target="#new">Add</button>
+                </div>
+                <br />
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>ISBN</th>
+                            <th>Category</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="new" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="api/new/book" method="post">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">New</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label>ISBN</label>
+                            <input type="text" name="isbn" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input type="text" name="category" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="update" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="api/update/book" method="post">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">Update</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Name</label>
+                            <input type="hidden" name="id" />
+                            <input type="text" name="name" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label>ISBN</label>
+                            <input type="text" name="isbn" class="form-control" required />
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input type="text" name="category" class="form-control" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="view" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">View</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" name="name" class="form-control" required readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label>ISBN</label>
+                        <input type="text" name="isbn" class="form-control" required readonly="readonly" />
+                    </div>
+                    <div class="form-group">
+                        <label>Category</label>
+                        <input type="text" name="category" class="form-control" required readonly="readonly" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="js/jquery.form.js"></script>
+    <script>
+        $(function() {
+
+            var tbody = $('table tbody').hide();
+
+            $.get('api/get/book', function(data) {
+                for (var i = 0; i < data.length; i++) {
+                    var tr = createRow(data[i]);
+                    tr.appendTo(tbody);
+                }
+
+                tbody.fadeIn(300);
+            })
+
+            $('#new form').ajaxForm(function(data) {
+                var $this = $(this);
+                if (data.status == "success") {
+                    var tr = createRow(data.message);
+                    tr.appendTo(tbody);
+                    $('#new').modal('hide');
+                } else {
+                    alert('error')
+                }
+            })
+
+            tbody.delegate('a[data-action=delete]', 'click', function(e) {
+                e.preventDefault();
+                var id = this.getAttribute('data-id');
+                var $this = $(this);
+                $.post('api/delete/book', {
+                    id: id
+                }, function(data) {
+                    if (data.status == "success") {
+                        $this.parents('tr').remove();
+                    }
+                })
+            })
+
+            $('#view').on(
+                'show.bs.modal',
+                function(event) {
+                    var button = $(event.relatedTarget);
+                    var modal = $(this);
+                    $.get('api/get/book/' + button.data('id'), function(data) {
+                        modal.find('.modal-body input[name=name]').val(
+                            data[0].name);
+                        modal.find('.modal-body input[name=isbn]').val(
+                            data[0].isbn);
+                        modal.find('.modal-body input[name=category]').val(
+                            data[0].category);
+                    })
+                })
+
+            $('#update').on(
+                'show.bs.modal',
+                function(event) {
+                    var button = $(event.relatedTarget);
+                    var modal = $(this);
+                    $.get('api/get/book/' + button.data('id'), function(data) {
+                        modal.find('.modal-body input[name=id]').val(
+                            data[0].id);
+                        modal.find('.modal-body input[name=name]').val(
+                            data[0].name);
+                        modal.find('.modal-body input[name=isbn]').val(
+                            data[0].isbn);
+                        modal.find('.modal-body input[name=category]').val(
+                            data[0].category);
+                    })
+                }).find('form').ajaxForm(
+                function(data) {
+                    if (data.status == "success") {
+                        var tr = createRow(data.message);
+                        var parent = tbody.find(
+                                'a[data-id=' + data.message.id + ']')
+                            .parents('tr');
+                        tr.insertAfter(parent);
+                        parent.remove();
+                        $('#update').modal('hide');
+                    }
+                })
+
+            function createRow(book) {
+                var tr = $('<tr>');
+                $('<td>').text(book.id).appendTo(tr);
+                $('<td>').text(book.name).appendTo(tr);
+                $('<td>').text(book.isbn).appendTo(tr);
+                $('<td>').text(book.category).appendTo(tr);
+                var actions = '<a data-toggle="modal" data-target="#update" href="#" data-id="' + book.id + '" data-name="' + book.name + '" data-isbn="' + book.isbn + '" data-category="' + book.category + '" data-action="update">update</a>';
+                actions += '&emsp;<a data-toggle="modal" data-target="#view" href="#" data-id="' + book.id + '" data-action="view">view</a>';
+                actions += '&emsp;<a href="#" data-id="' + book.id + '" data-action="delete">delete</a>';
+                $('<td>').html(actions).appendTo(tr);
+                return tr;
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>
