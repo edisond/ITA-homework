@@ -6,11 +6,12 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd">
+        http://www.springframework.org/schema/context/spring-context.xsd"
+	default-autowire="byName">
 
 
-
-	<context:component-scan base-package="controller" />
+	<!--全局设置 -->
+	<context:component-scan base-package="com.kary.spring.controller" />
 
 	<mvc:annotation-driven />
 	<mvc:resources location="/" mapping="/*.html" />
@@ -18,15 +19,39 @@
 	<mvc:resources location="/css/" mapping="/css/**" />
 	<mvc:resources location="/img/" mapping="/img/**" />
 
+	<!--Dao -->
+	<bean id="db" class="com.kary.spring.dao.Db">
+		<constructor-arg name="driverClass" value="com.mysql.jdbc.Driver"></constructor-arg>
+		<constructor-arg name="url" value="jdbc:mysql://localhost:3306/kary"></constructor-arg>
+		<constructor-arg name="user" value="root"></constructor-arg>
+		<constructor-arg name="password" value="3363"></constructor-arg>
+	</bean>
+	<bean id="userDao" class="com.kary.spring.dao.impl.UserDao">
+		<constructor-arg name="db" ref="db"></constructor-arg>
+	</bean>
+	<bean id="bookDao" class="com.kary.spring.dao.impl.BookDao">
+		<constructor-arg name="db" ref="db"></constructor-arg>
+	</bean>
+
+	<!--Service -->
+	<bean id="userService" class="com.kary.spring.service.UserService">
+		<constructor-arg name="dao" ref="userDao"></constructor-arg>
+	</bean>
+	<bean id="bookService" class="com.kary.spring.service.BookService">
+		<constructor-arg name="dao" ref="bookDao"></constructor-arg>
+	</bean>
+
+
+	<!--拦截器 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/main.html"/>
-			<mvc:mapping path="/api/**"/>
+			<mvc:mapping path="/main.html" />
+			<mvc:mapping path="/api/**" />
 			<mvc:exclude-mapping path="/api/login" />
-			<bean class="interceptor.CheckLoginInterceptor"></bean>
+			<bean class="com.kary.spring.interceptor.CheckLoginInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 
+	<!--视图解析器 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"></bean>
-
 </beans>

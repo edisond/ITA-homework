@@ -1,4 +1,4 @@
-package interceptor;
+package com.kary.spring.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,8 +9,9 @@ public class CheckLoginInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-		System.out.println("CheckLoginInterceptor...");
+		System.out.println("Check logined...");
 		if (request.getSession().getAttribute("user") == null) {
+			System.out.println("Not logined...");
 			response.sendRedirect("/SpringMVC/login.html");
 			return false;
 		}

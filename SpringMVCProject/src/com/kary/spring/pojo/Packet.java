@@ -1,4 +1,4 @@
-package pojo;
+package com.kary.spring.pojo;
 
 public class Packet {
 	private Object message;

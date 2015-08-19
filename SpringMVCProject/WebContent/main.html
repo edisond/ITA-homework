@@ -175,11 +175,11 @@
                     var modal = $(this);
                     $.get('api/get/book/' + button.data('id'), function(data) {
                         modal.find('.modal-body input[name=name]').val(
-                            data[0].name);
+                            data.name);
                         modal.find('.modal-body input[name=isbn]').val(
-                            data[0].isbn);
+                            data.isbn);
                         modal.find('.modal-body input[name=category]').val(
-                            data[0].category);
+                            data.category);
                     })
                 })
 
@@ -190,13 +190,13 @@
                     var modal = $(this);
                     $.get('api/get/book/' + button.data('id'), function(data) {
                         modal.find('.modal-body input[name=id]').val(
-                            data[0].id);
+                            data.id);
                         modal.find('.modal-body input[name=name]').val(
-                            data[0].name);
+                            data.name);
                         modal.find('.modal-body input[name=isbn]').val(
-                            data[0].isbn);
+                            data.isbn);
                         modal.find('.modal-body input[name=category]').val(
-                            data[0].category);
+                            data.category);
                     })
                 }).find('form').ajaxForm(
                 function(data) {
