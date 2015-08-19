@@ -42,8 +42,8 @@ public class UpdateFoodServlet extends HttpServlet {
 				new ImageDao().insert(new Image(fileName, imgBody));
 			}
 			if (dao.update(food) > 0) {
-				response.sendRedirect("/O2O_Seller/main/food.jsp?type=" + food.getFoodTypeId());
-				JmsUtil.produce("msg");
+				response.sendRedirect("/O2O_Seller/main/food.html?type=" + food.getFoodTypeId());
+				//JmsUtil.produce("msg");
 			} else {
 				response.getWriter().print("<script>alert('Error');location.href='/O2O_Seller/main/newFood.jsp';</script>");
 			}

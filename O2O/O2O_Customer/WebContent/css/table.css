@@ -1,0 +1,36 @@
+.main{
+	background: white;
+	padding: 30px;
+}
+
+.main table{
+	font-weight: bold;
+}
+
+.sub-info{
+	color: #777;
+}
+
+.paging{
+	text-align: center;
+}
+
+.table-title{
+	margin-bottom: 30px;
+}
+
+.sortable{
+	cursor: pointer;
+}
+
+.msg-total{
+	position: relative;
+	top: -12px;
+	left: -10px;
+	background: red;
+	color: white;
+}
+
+body{
+	background: #FAFAFA;
+}

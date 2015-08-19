@@ -64,4 +64,11 @@ public class FoodDTO {
 	}
 	private String foodTypeName;
 	private byte[] pictureBody;
+	private String pictureBodyBase64;
+	public String getPictureBodyBase64() {
+		return pictureBodyBase64;
+	}
+	public void setPictureBodyBase64(String pictureBodyBase64) {
+		this.pictureBodyBase64 = pictureBodyBase64;
+	}
 }

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Take-Out</title>
+<link href="http://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/login.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="logo">
+				<img src="img/tomcat_Client.png" />
+			</div>
+			<form id="sign-form" class="sign-form" action="/O2O_Customer/LoginServlet" method="post">
+				<h3>Welcome to Take-out</h3>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-user"></span>
+					</span>
+					<input type="text" class="form-control" name="name" id="username" placeholder="username">
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon">
+						<span class="glyphicon glyphicon-lock"></span>
+					</span>
+					<input type="password" class="form-control" name="psw" id="password" placeholder="password">
+				</div>
+				<div class="checkbox btn-re">
+					<label>
+						<input type="checkbox">
+						Remeber me
+					</label>
+				</div>
+				<div>
+					<span class="text-danger" data-role="error"></span>
+				</div>
+				<div class="bttons">
+					<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+					<a class="btn btn-lg btn-success btn-block" href="register.html">Register</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script src="http://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+	<script src="http://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<script src="js/jquery.form.js"></script>
+	<script>
+		$(function() {
+			var form = $('form');
+			form.ajaxForm(function(data) {
+				data = $.parseJSON(data);
+				if (data.status == "success") {
+					location.href = 'main/index.html';
+				} else {
+					form.find('[data-role=error]').text(data.message);
+				}
+			})
+		})
+	</script>
+</body>
+</html>

@@ -6,9 +6,9 @@ package com.oocl.o2o.util;
  */
 public class Constants {
 	public static final Integer STATUS_APPROVED = 1;
-	public static final Integer STSTUS_APPROVING = 2;
+	public static final Integer STATUS_APPROVING = 2;
 	public static final Integer STATUS_DELETED = 3;
-	public static final Integer STSTUS_NORMAL = 4;
+	public static final Integer STATUS_NORMAL = 4;
 
 	public static final String ROLE_SELLER = "seller";
 	public static final String ROLE_Admin = "admin";
