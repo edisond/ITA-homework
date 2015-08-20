@@ -46,7 +46,7 @@ drop table if exists users;
 CREATE TABLE USERS
 (
     USERID INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-    USERNAME VARCHAR(20) NOT NULL,
+    USERNAME VARCHAR(20) NOT NULL UNIQUE,
     PASSWORD VARCHAR(20) NOT NULL,
     IDCARD VARCHAR(18),
     LICENSE VARCHAR(100),
@@ -55,11 +55,28 @@ CREATE TABLE USERS
     STATUSID INTEGER NOT NULL
 );
 
+drop table if exists orders;
+CREATE TABLE orders
+(
+    orderID INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
+    USERID INTEGER NOT NULL,
+    ordertime datetime not null
+);
+
+drop table if exists orders_food;
+CREATE TABLE orders_food
+(
+    orderID INTEGER not null,
+    FOODID INTEGER NOT NULL,
+    foodNum INTEGER not null,
+    PRIMARY KEY (orderID, FOODID)
+);
+
 drop table if exists images;
 CREATE TABLE images
 (
     id varchar(100) primary key,
-    body blob not null
+    body longblob not null
 );
 
 insert into status (statusname) values ('approved');
@@ -75,42 +92,27 @@ insert into users (username,password,idcard,tel,role,statusid) values ('vera','1
 insert into users (username,password,idcard,tel,role,statusid) values ('willson','123','12345678','13300000000','customer',1);
 insert into users (username,password,idcard,tel,role,statusid) values ('james','123','12345678','13300000000','customer',1);
 
-insert into FOOD_TYPE (foodtypename) values ('÷˜ ≥');
-insert into FOOD_TYPE (foodtypename) values ('≈‰≤À');
-insert into FOOD_TYPE (foodtypename) values ('“˚¡œ');
+insert into FOOD_TYPE (foodtypename) values ('‰∏ªËèú');
+insert into FOOD_TYPE (foodtypename) values ('Â∞èÂêÉ');
+insert into FOOD_TYPE (foodtypename) values ('È•ÆÂìÅ');
 
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À1','10',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À2','20',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À3','30',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À4','40',1,1,3);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À1','10',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À2','20',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À3','30',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À4','40',1,1,3);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À1','10',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À2','20',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À3','30',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À4','40',1,1,3);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À1','10',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À2','20',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À3','30',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À4','40',1,1,3);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À1','10',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À2','20',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À3','30',1,1,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('÷˜≤À4','40',1,1,3);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('≈‰≤À1','10',1,2,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('≈‰≤À2','20',1,2,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('≈‰≤À3','30',1,2,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('≈‰≤À4','40',1,2,3);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('≈‰≤À1','10',1,2,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('≈‰≤À2','20',1,2,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('≈‰≤À3','30',1,2,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('≈‰≤À4','40',1,2,3);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('“˚¡œ1','10',1,3,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('“˚¡œ2','20',1,3,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('“˚¡œ3','30',1,3,2);
-insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('“˚¡œ4','40',1,3,3);
-
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('‰∏ªËèú1','10',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('‰∏ªËèú2','20',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('‰∏ªËèú3','30',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('‰∏ªËèú4','40',1,1,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('Â∞èÂêÉ1','10',1,2,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('Â∞èÂêÉ2','20',1,2,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('Â∞èÂêÉ3','30',1,2,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('Â∞èÂêÉ4','40',1,2,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('È•ÆÂìÅ1','10',1,3,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('È•ÆÂìÅ2','20',1,3,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('È•ÆÂìÅ3','30',1,3,2);
+insert into food (foodname,price,STATUSID,FOODTYPEID,userid) values ('È•ÆÂìÅ4','40',1,3,2);
 
 select * from images;
+
+update food set statusid=1;
+
+delete from food where PICTURE_URL is null;
+
+delete from food where foodid=25;

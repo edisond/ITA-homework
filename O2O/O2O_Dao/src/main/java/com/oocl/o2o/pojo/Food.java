@@ -4,7 +4,7 @@ package com.oocl.o2o.pojo;
  * @author Aquariuslt
  * @version 15-08-05
  */
-public class Food {
+public class Food implements Comparable<Food> {
 
 	private Integer foodId;
 	private String foodName;
@@ -68,5 +68,10 @@ public class Food {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+
+	@Override
+	public int compareTo(Food o) {
+		return foodId == o.foodId ? 0 : 1;
 	}
 }

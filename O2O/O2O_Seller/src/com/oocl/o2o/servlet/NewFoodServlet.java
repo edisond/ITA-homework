@@ -42,7 +42,7 @@ public class NewFoodServlet extends HttpServlet {
 			food.setPrice(Double.parseDouble(params.get("price")));
 			food.setFoodTypeId(Integer.parseInt(params.get("type")));
 			food.setPictureUrl(params.get("picture"));
-			food.setStatusId(Constants.STSTUS_APPROVING);
+			food.setStatusId(Constants.STATUS_APPROVING);
 			food.setUserId(user.getUserId());
 
 			byte[] imgBody = helper.getFile();
@@ -51,8 +51,8 @@ public class NewFoodServlet extends HttpServlet {
 				imageDao.insert(new Image(fileName, imgBody));
 			}
 			if (dao.insert(food) > 0) {
-				response.sendRedirect("/O2O_Seller/main/food.jsp?type=" + food.getFoodTypeId());
-				JmsUtil.produce("msg");
+				response.sendRedirect("/O2O_Seller/main/food.html?type=" + food.getFoodTypeId());
+				//JmsUtil.produce("msg");
 			} else {
 				response.getWriter().print("<script>alert('Error');location.href='/O2O_Seller/main/newFood.jsp';</script>");
 			}

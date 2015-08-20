@@ -55,7 +55,7 @@ public class UpdatePackageServlet extends HttpServlet {
 		pack.setPackageId(id);
 		pack.setPackageName(name);
 		pack.setPrice(Double.parseDouble(price));
-		pack.setStatusId(Constants.STSTUS_APPROVING);
+		pack.setStatusId(Constants.STATUS_APPROVING);
 		pack.setUserId(user.getUserId());
 
 		PackageDao packageDao = new PackageDao();

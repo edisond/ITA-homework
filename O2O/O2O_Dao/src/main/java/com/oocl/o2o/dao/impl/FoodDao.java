@@ -1,6 +1,7 @@
 package com.oocl.o2o.dao.impl;
 
 import com.oocl.o2o.dao.*;
+import com.oocl.o2o.dto.FoodDTO;
 import com.oocl.o2o.pojo.*;
 import com.oocl.o2o.util.*;
 
@@ -236,6 +237,34 @@ public class FoodDao extends Db implements Dao<Food> {
 		return list;
 	}
 
-	
+	public List<FoodDTO> findAllDTOByCriteria(SearchCriteria criteria){
+		List<FoodDTO> list = new LinkedList<FoodDTO>();
+		try {
+			connect();
+			String sql="select * from food left join images on picture_url=id"+criteria.buildSQLWhere();
+			System.out.println(sql);
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				FoodDTO f=new FoodDTO();
+				f.setFoodId(resultSet.getInt("FOODID"));
+				f.setFoodName(resultSet.getString("FOODNAME"));
+				f.setPrice(resultSet.getDouble("PRICE"));
+				f.setPictureUrl(resultSet.getString("PICTURE_URL"));
+				f.setStatusId(resultSet.getInt("STATUSID"));
+				f.setUserId(resultSet.getInt("USERID"));
+				f.setFoodTypeId(resultSet.getInt("FOODTYPEID"));
+				f.setPictureBody(resultSet.getBytes("BODY"));
+				list.add(f);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			disconnect();
+		}
+		
+		return list;
+	}
 	
 }

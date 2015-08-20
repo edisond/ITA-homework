@@ -80,4 +80,22 @@ public class SearchCriteria {
 		System.out.println("Build Criteria SQL:" + sql);
 		return sql;
 	}
+
+	public String buildSQLWhere() {
+		String sql = " WHERE 1=1";
+		for (Criteria c : criterias) {
+			sql += " AND " + c.getKey() + c.getOperation() + c.getValue();
+		}
+		if (order != null) {
+			sql += " ORDER BY " + order + " ";
+			if (seq != null) {
+				sql += seq;
+			}
+		}
+		if (start != null && length != null) {
+			sql += " LIMIT " + start + " , " + length + " ";
+		}
+		System.out.println("Build Criteria SQL:" + sql);
+		return sql;
+	}
 }

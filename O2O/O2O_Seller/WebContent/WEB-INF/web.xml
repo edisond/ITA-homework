@@ -62,15 +62,6 @@
     <url-pattern>/LogoutServlet</url-pattern>
   </servlet-mapping>
   <filter>
-    <display-name>FoodFilter</display-name>
-    <filter-name>FoodFilter</filter-name>
-    <filter-class>com.oocl.o2o.filter.FoodFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>FoodFilter</filter-name>
-    <url-pattern>/main/food.jsp</url-pattern>
-  </filter-mapping>
-  <filter>
     <display-name>PackageFilter</display-name>
     <filter-name>PackageFilter</filter-name>
     <filter-class>com.oocl.o2o.filter.PackageFilter</filter-class>
@@ -78,15 +69,6 @@
   <filter-mapping>
     <filter-name>PackageFilter</filter-name>
     <url-pattern>/main/package.jsp</url-pattern>
-  </filter-mapping>
-  <filter>
-    <display-name>FoodTypeFilter</display-name>
-    <filter-name>FoodTypeFilter</filter-name>
-    <filter-class>com.oocl.o2o.filter.FoodTypeFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>FoodTypeFilter</filter-name>
-    <url-pattern>/main/*</url-pattern>
   </filter-mapping>
   <servlet>
     <description></description>
@@ -148,28 +130,6 @@
     <servlet-name>DeletePackageServlet</servlet-name>
     <url-pattern>/main/DeletePackageServlet</url-pattern>
   </servlet-mapping>
-  <filter>
-    <display-name>AllFoodFilter</display-name>
-    <filter-name>AllFoodFilter</filter-name>
-    <filter-class>com.oocl.o2o.filter.AllFoodFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>AllFoodFilter</filter-name>
-    <url-pattern>/main/newPackage.jsp</url-pattern>
-  </filter-mapping>
-  <filter-mapping>
-    <filter-name>AllFoodFilter</filter-name>
-    <url-pattern>/main/UpdatePackageServlet</url-pattern>
-  </filter-mapping>
-  <filter>
-    <display-name>ImageFilter</display-name>
-    <filter-name>ImageFilter</filter-name>
-    <filter-class>com.oocl.o2o.filter.ImageFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>ImageFilter</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
   <servlet>
     <description></description>
     <display-name>GetSessionInfoServlet</display-name>

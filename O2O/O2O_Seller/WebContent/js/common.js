@@ -18,6 +18,12 @@ $(function () {
         for (var i = 0; i < data.length; i++) {
             $('<li><a href="/O2O_Seller/main/food.html?type=' + data[i].foodTypeId + '">' + data[i].foodTypeName + '</a></li>').insertBefore(foodTypeSeparator);
         }
+        $('select[data-role=foodType]').each(function(i,n) {
+        	$n=$(n);
+        	for (var i = 0; i < data.length; i++) {
+                $('<option value="'+data[i].foodTypeId+'">' + data[i].foodTypeName + '</option>').appendTo($n);
+            }
+		})
     });
 
 })
