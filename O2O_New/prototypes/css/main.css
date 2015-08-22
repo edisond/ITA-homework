@@ -1,0 +1,46 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+body,
+button,
+input,
+select,
+textarea,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Microsoft YaHei', '宋体', 'Tahoma', 'Helvetica', 'Arial', sans-serif;
+}
+.clear {
+    clear: both;
+}
+.container {
+    width: 1170px;
+}
+.change-location-bg {
+    background: url(../img/bg.jpg) no-repeat #F4F4F4;
+    background-size: cover;
+}
+form.change-location-form {
+    margin: 300px auto 0;
+    width: 880px;
+}
+form.change-location-form .city {
+    float: left;
+    width: 120px;
+}
+form.change-location-form .area {
+    float: left;
+    width: 600px;
+    margin-left: 10px;
+}
+form.change-location-form .history {
+    float: left;
+    width: 130px;
+    margin-left: 10px;
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html lang="">
+
+<head>
+    <meta charset="UTF-8">
+    <title>外卖</title>
+    <link rel="stylesheet" type="text/css" href="bower/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="bower/font-awesome-4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <script src="bower/angular/angular.js"></script>
+    <script src="bower/angular-ui-bootstrap/uibootstrap.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/indexController.js"></script>
+</head>
+
+<body class="change-location-bg" ng-app="o2o">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <form class="change-location-form" ng-controller="locationCtrl">
+                    <select class="form-control input-lg city">
+                        <option ng-repeat="city in cities">{{city}}</option>
+                    </select>
+                    <div class="input-group area">
+                        <input type="text" class="form-control input-lg" placeholder="输入地址搜索周边美食">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default btn-lg" type="button">搜索</button>
+                        </span>
+                    </div>
+                    <select class="form-control input-lg history">
+                        <option>历史地址</option>
+                    </select>
+                    <div class="clear"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>
